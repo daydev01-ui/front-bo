@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BCP.Connector.Segurinet\BCP.Connector.Segurinet.csproj" />
+    <ProjectReference Include="..\BCP.Framework.Log\BCP.Framework.Log.csproj" />
+    <ProjectReference Include="..\BCP.QRBackOffice.Models\BCP.QRBackOffice.Models.csproj" />
+  </ItemGroup>
+
+</Project>
