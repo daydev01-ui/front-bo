@@ -1,0 +1,580 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "BCP.MicroService.backoffice-payment-service-qr/1.0.0": {
+        "dependencies": {
+          "Asp.Versioning.Mvc.ApiExplorer": "8.1.0",
+          "BCP.DataAccess": "1.0.0",
+          "BCP.Framework": "1.0.0",
+          "BCP.Framework.CacheProvider": "1.0.0",
+          "BCP.Framework.Http": "1.0.0",
+          "BCP.Framework.Security": "1.0.0",
+          "BCP.Logs": "1.0.0",
+          "BCP.Models": "1.0.0",
+          "BCP.QR.Connector.Authenticate": "1.0.0",
+          "Swashbuckle.AspNetCore": "6.4.0"
+        },
+        "runtime": {
+          "BCP.MicroService.backoffice-payment-service-qr.dll": {}
+        }
+      },
+      "Asp.Versioning.Abstractions/8.1.0": {
+        "runtime": {
+          "lib/net8.0/Asp.Versioning.Abstractions.dll": {
+            "assemblyVersion": "8.1.0.0",
+            "fileVersion": "8.1.8851.31619"
+          }
+        }
+      },
+      "Asp.Versioning.Http/8.1.0": {
+        "dependencies": {
+          "Asp.Versioning.Abstractions": "8.1.0"
+        },
+        "runtime": {
+          "lib/net8.0/Asp.Versioning.Http.dll": {
+            "assemblyVersion": "8.1.0.0",
+            "fileVersion": "8.1.8851.31627"
+          }
+        }
+      },
+      "Asp.Versioning.Mvc/8.1.0": {
+        "dependencies": {
+          "Asp.Versioning.Http": "8.1.0"
+        },
+        "runtime": {
+          "lib/net8.0/Asp.Versioning.Mvc.dll": {
+            "assemblyVersion": "8.1.0.0",
+            "fileVersion": "8.1.8851.31627"
+          }
+        }
+      },
+      "Asp.Versioning.Mvc.ApiExplorer/8.1.0": {
+        "dependencies": {
+          "Asp.Versioning.Mvc": "8.1.0"
+        },
+        "runtime": {
+          "lib/net8.0/Asp.Versioning.Mvc.ApiExplorer.dll": {
+            "assemblyVersion": "8.1.0.0",
+            "fileVersion": "8.1.8851.31636"
+          }
+        }
+      },
+      "EPPlus/8.5.1": {
+        "dependencies": {
+          "EPPlus.Interfaces": "8.4.0",
+          "Microsoft.IO.RecyclableMemoryStream": "3.0.1"
+        },
+        "runtime": {
+          "lib/net10.0/EPPlus.dll": {
+            "assemblyVersion": "8.5.1.0",
+            "fileVersion": "8.5.1.0"
+          }
+        }
+      },
+      "EPPlus.Interfaces/8.4.0": {
+        "runtime": {
+          "lib/net10.0/EPPlus.Interfaces.dll": {
+            "assemblyVersion": "8.4.0.0",
+            "fileVersion": "8.4.0.0"
+          }
+        }
+      },
+      "Microsoft.IO.RecyclableMemoryStream/3.0.1": {
+        "runtime": {
+          "lib/net6.0/Microsoft.IO.RecyclableMemoryStream.dll": {
+            "assemblyVersion": "3.0.1.0",
+            "fileVersion": "3.0.1.0"
+          }
+        }
+      },
+      "Microsoft.OpenApi/1.2.3": {
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.OpenApi.dll": {
+            "assemblyVersion": "1.2.3.0",
+            "fileVersion": "1.2.3.0"
+          }
+        }
+      },
+      "Microsoft.Win32.SystemEvents/10.0.1": {
+        "runtime": {
+          "lib/net10.0/Microsoft.Win32.SystemEvents.dll": {
+            "assemblyVersion": "10.0.0.0",
+            "fileVersion": "10.0.125.57005"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net10.0/Microsoft.Win32.SystemEvents.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "10.0.0.0",
+            "fileVersion": "10.0.125.57005"
+          }
+        }
+      },
+      "Newtonsoft.Json/13.0.4": {
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.4.30916"
+          }
+        }
+      },
+      "runtime.native.System.Data.SqlClient.sni/4.4.0": {
+        "dependencies": {
+          "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni": "4.4.0",
+          "runtime.win-x64.runtime.native.System.Data.SqlClient.sni": "4.4.0",
+          "runtime.win-x86.runtime.native.System.Data.SqlClient.sni": "4.4.0"
+        }
+      },
+      "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni/4.4.0": {
+        "runtimeTargets": {
+          "runtimes/win-arm64/native/sni.dll": {
+            "rid": "win-arm64",
+            "assetType": "native",
+            "fileVersion": "4.6.25512.1"
+          }
+        }
+      },
+      "runtime.win-x64.runtime.native.System.Data.SqlClient.sni/4.4.0": {
+        "runtimeTargets": {
+          "runtimes/win-x64/native/sni.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "4.6.25512.1"
+          }
+        }
+      },
+      "runtime.win-x86.runtime.native.System.Data.SqlClient.sni/4.4.0": {
+        "runtimeTargets": {
+          "runtimes/win-x86/native/sni.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "4.6.25512.1"
+          }
+        }
+      },
+      "Serilog/4.3.0": {
+        "runtime": {
+          "lib/net9.0/Serilog.dll": {
+            "assemblyVersion": "4.3.0.0",
+            "fileVersion": "4.3.0.0"
+          }
+        }
+      },
+      "Serilog.Sinks.Console/6.1.1": {
+        "dependencies": {
+          "Serilog": "4.3.0"
+        },
+        "runtime": {
+          "lib/net8.0/Serilog.Sinks.Console.dll": {
+            "assemblyVersion": "6.1.1.0",
+            "fileVersion": "6.1.1.0"
+          }
+        }
+      },
+      "Serilog.Sinks.File/7.0.0": {
+        "dependencies": {
+          "Serilog": "4.3.0"
+        },
+        "runtime": {
+          "lib/net9.0/Serilog.Sinks.File.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.0.0"
+          }
+        }
+      },
+      "Swashbuckle.AspNetCore/6.4.0": {
+        "dependencies": {
+          "Swashbuckle.AspNetCore.Swagger": "6.4.0",
+          "Swashbuckle.AspNetCore.SwaggerGen": "6.4.0",
+          "Swashbuckle.AspNetCore.SwaggerUI": "6.4.0"
+        }
+      },
+      "Swashbuckle.AspNetCore.Swagger/6.4.0": {
+        "dependencies": {
+          "Microsoft.OpenApi": "1.2.3"
+        },
+        "runtime": {
+          "lib/net6.0/Swashbuckle.AspNetCore.Swagger.dll": {
+            "assemblyVersion": "6.4.0.0",
+            "fileVersion": "6.4.0.0"
+          }
+        }
+      },
+      "Swashbuckle.AspNetCore.SwaggerGen/6.4.0": {
+        "dependencies": {
+          "Swashbuckle.AspNetCore.Swagger": "6.4.0"
+        },
+        "runtime": {
+          "lib/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {
+            "assemblyVersion": "6.4.0.0",
+            "fileVersion": "6.4.0.0"
+          }
+        }
+      },
+      "Swashbuckle.AspNetCore.SwaggerUI/6.4.0": {
+        "runtime": {
+          "lib/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {
+            "assemblyVersion": "6.4.0.0",
+            "fileVersion": "6.4.0.0"
+          }
+        }
+      },
+      "System.Data.SqlClient/4.9.1": {
+        "dependencies": {
+          "runtime.native.System.Data.SqlClient.sni": "4.4.0"
+        },
+        "runtime": {
+          "lib/net8.0/System.Data.SqlClient.dll": {
+            "assemblyVersion": "4.6.1.6",
+            "fileVersion": "4.900.126.11103"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/net8.0/System.Data.SqlClient.dll": {
+            "rid": "unix",
+            "assetType": "runtime",
+            "assemblyVersion": "4.6.1.6",
+            "fileVersion": "4.900.126.11103"
+          },
+          "runtimes/win/lib/net8.0/System.Data.SqlClient.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "4.6.1.6",
+            "fileVersion": "4.900.126.11103"
+          }
+        }
+      },
+      "System.Drawing.Common/10.0.1": {
+        "dependencies": {
+          "Microsoft.Win32.SystemEvents": "10.0.1"
+        },
+        "runtime": {
+          "lib/net10.0/System.Drawing.Common.dll": {
+            "assemblyVersion": "10.0.0.0",
+            "fileVersion": "10.0.125.57005"
+          },
+          "lib/net10.0/System.Private.Windows.Core.dll": {
+            "assemblyVersion": "10.0.0.0",
+            "fileVersion": "10.0.125.57005"
+          },
+          "lib/net10.0/System.Private.Windows.GdiPlus.dll": {
+            "assemblyVersion": "10.0.0.0",
+            "fileVersion": "10.0.125.57005"
+          }
+        }
+      },
+      "BCP.DataAccess/1.0.0": {
+        "dependencies": {
+          "BCP.Framework": "1.0.0",
+          "BCP.Logs": "1.0.0",
+          "BCP.Models": "1.0.0",
+          "System.Data.SqlClient": "4.9.1"
+        },
+        "runtime": {
+          "BCP.DataAccess.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "BCP.Framework/1.0.0": {
+        "dependencies": {
+          "BCP.Logs": "1.0.0",
+          "BCP.Models": "1.0.0",
+          "Newtonsoft.Json": "13.0.4",
+          "System.Drawing.Common": "10.0.1"
+        },
+        "runtime": {
+          "BCP.Framework.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "BCP.Framework.CacheProvider/1.0.0": {
+        "runtime": {
+          "BCP.Framework.CacheProvider.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "BCP.Framework.Http/1.0.0": {
+        "dependencies": {
+          "BCP.DataAccess": "1.0.0",
+          "BCP.Models": "1.0.0"
+        },
+        "runtime": {
+          "BCP.Framework.Http.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "BCP.Framework.Security/1.0.0": {
+        "dependencies": {
+          "BCP.Framework": "1.0.0",
+          "BCP.Logs": "1.0.0",
+          "BCP.Models": "1.0.0"
+        },
+        "runtime": {
+          "BCP.Framework.Security.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "BCP.Logs/1.0.0": {
+        "dependencies": {
+          "Serilog": "4.3.0",
+          "Serilog.Sinks.Console": "6.1.1",
+          "Serilog.Sinks.File": "7.0.0"
+        },
+        "runtime": {
+          "BCP.Logs.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "BCP.Models/1.0.0": {
+        "dependencies": {
+          "EPPlus": "8.5.1"
+        },
+        "runtime": {
+          "BCP.Models.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "BCP.QR.Connector.Authenticate/1.0.0": {
+        "dependencies": {
+          "BCP.Logs": "1.0.0",
+          "BCP.Models": "1.0.0",
+          "Newtonsoft.Json": "13.0.4"
+        },
+        "runtime": {
+          "BCP.QR.Connector.Authenticate.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BCP.MicroService.backoffice-payment-service-qr/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Asp.Versioning.Abstractions/8.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mpeNZyMdvrHztJwR1sXIUQ+3iioEU97YMBnFA9WLbsPOYhGwDJnqJMmEd8ny7kcmS9OjTHoEuX/bSXXY3brIFA==",
+      "path": "asp.versioning.abstractions/8.1.0",
+      "hashPath": "asp.versioning.abstractions.8.1.0.nupkg.sha512"
+    },
+    "Asp.Versioning.Http/8.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Xu4xF62Cu9JqYi/CTa2TiK5kyHoa4EluPynj/bPFWDmlTIPzuJQbBI5RgFYVRFHjFVvWMoA77acRaFu7i7Wzqg==",
+      "path": "asp.versioning.http/8.1.0",
+      "hashPath": "asp.versioning.http.8.1.0.nupkg.sha512"
+    },
+    "Asp.Versioning.Mvc/8.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BMAJM2sGsTUw5FQ9upKQt6GFoldWksePgGpYjl56WSRvIuE3UxKZh0gAL+wDTIfLshUZm97VCVxlOGyrcjWz9Q==",
+      "path": "asp.versioning.mvc/8.1.0",
+      "hashPath": "asp.versioning.mvc.8.1.0.nupkg.sha512"
+    },
+    "Asp.Versioning.Mvc.ApiExplorer/8.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-a90gW/4TF/14Bjiwg9LqNtdKGC4G3gu02+uynq3bCISfQm48km5chny4Yg5J4hixQPJUwwJJ9Do1G+jM8L9h3g==",
+      "path": "asp.versioning.mvc.apiexplorer/8.1.0",
+      "hashPath": "asp.versioning.mvc.apiexplorer.8.1.0.nupkg.sha512"
+    },
+    "EPPlus/8.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LhdQjZ7gTJYYMyHVdBTeIq8N+tYQeV1/VZSnOGeopoJFMWFqJ8V81L9h84yH7PkpF4p7LVJX1uakYTwgmf8Siw==",
+      "path": "epplus/8.5.1",
+      "hashPath": "epplus.8.5.1.nupkg.sha512"
+    },
+    "EPPlus.Interfaces/8.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QaEzDFG2vcQMPqUmoWv0vBTObtH8hffQmyDr2WkqRYF/nFSn2pkdBB4vudcd/EIv0N8M3P1fzzkPQgEWsFnUmA==",
+      "path": "epplus.interfaces/8.4.0",
+      "hashPath": "epplus.interfaces.8.4.0.nupkg.sha512"
+    },
+    "Microsoft.IO.RecyclableMemoryStream/3.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-s/s20YTVY9r9TPfTrN5g8zPF1YhwxyqO6PxUkrYTGI2B+OGPe9AdajWZrLhFqXIvqIW23fnUE4+ztrUWNU1+9g==",
+      "path": "microsoft.io.recyclablememorystream/3.0.1",
+      "hashPath": "microsoft.io.recyclablememorystream.3.0.1.nupkg.sha512"
+    },
+    "Microsoft.OpenApi/1.2.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Nug3rO+7Kl5/SBAadzSMAVgqDlfGjJZ0GenQrLywJ84XGKO0uRqkunz5Wyl0SDwcR71bAATXvSdbdzPrYRYKGw==",
+      "path": "microsoft.openapi/1.2.3",
+      "hashPath": "microsoft.openapi.1.2.3.nupkg.sha512"
+    },
+    "Microsoft.Win32.SystemEvents/10.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-trU4LN2C04nj5qnl8HqoX0NJGPCFg9h2f5o+jjp3Xm8c8fQtu6Ga1/fNFMf3AapoHyLP1WlP21XnL2ij/TLKlg==",
+      "path": "microsoft.win32.systemevents/10.0.1",
+      "hashPath": "microsoft.win32.systemevents.10.0.1.nupkg.sha512"
+    },
+    "Newtonsoft.Json/13.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pdgNNMai3zv51W5aq268sujXUyx7SNdE2bj1wZcWjAQrKMFZV260lbqYop1d2GM67JI1huLRwxo9ZqnfF/lC6A==",
+      "path": "newtonsoft.json/13.0.4",
+      "hashPath": "newtonsoft.json.13.0.4.nupkg.sha512"
+    },
+    "runtime.native.System.Data.SqlClient.sni/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-A8v6PGmk+UGbfWo5Ixup0lPM4swuSwOiayJExZwKIOjTlFFQIsu3QnDXECosBEyrWSPryxBVrdqtJyhK3BaupQ==",
+      "path": "runtime.native.system.data.sqlclient.sni/4.4.0",
+      "hashPath": "runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
+    },
+    "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LbrynESTp3bm5O/+jGL8v0Qg5SJlTV08lpIpFesXjF6uGNMWqFnUQbYBJwZTeua6E/Y7FIM1C54Ey1btLWupdg==",
+      "path": "runtime.win-arm64.runtime.native.system.data.sqlclient.sni/4.4.0",
+      "hashPath": "runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
+    },
+    "runtime.win-x64.runtime.native.System.Data.SqlClient.sni/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-38ugOfkYJqJoX9g6EYRlZB5U2ZJH51UP8ptxZgdpS07FgOEToV+lS11ouNK2PM12Pr6X/PpT5jK82G3DwH/SxQ==",
+      "path": "runtime.win-x64.runtime.native.system.data.sqlclient.sni/4.4.0",
+      "hashPath": "runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
+    },
+    "runtime.win-x86.runtime.native.System.Data.SqlClient.sni/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YhEdSQUsTx+C8m8Bw7ar5/VesXvCFMItyZF7G1AUY+OM0VPZUOeAVpJ4Wl6fydBGUYZxojTDR3I6Bj/+BPkJNA==",
+      "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
+      "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
+    },
+    "Serilog/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+cDryFR0GRhsGOnZSKwaDzRRl4MupvJ42FhCE4zhQRVanX0Jpg6WuCBk59OVhVDPmab1bB+nRykAnykYELA9qQ==",
+      "path": "serilog/4.3.0",
+      "hashPath": "serilog.4.3.0.nupkg.sha512"
+    },
+    "Serilog.Sinks.Console/6.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8jbqgjUyZlfCuSTaJk6lOca465OndqOz3KZP6Cryt/IqZYybyBu7GP0fE/AXBzrrQB3EBmQntBFAvMVz1COvAA==",
+      "path": "serilog.sinks.console/6.1.1",
+      "hashPath": "serilog.sinks.console.6.1.1.nupkg.sha512"
+    },
+    "Serilog.Sinks.File/7.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fKL7mXv7qaiNBUC71ssvn/dU0k9t0o45+qm2XgKAlSt19xF+ijjxyA3R6HmCgfKEKwfcfkwWjayuQtRueZFkYw==",
+      "path": "serilog.sinks.file/7.0.0",
+      "hashPath": "serilog.sinks.file.7.0.0.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore/6.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eUBr4TW0up6oKDA5Xwkul289uqSMgY0xGN4pnbOIBqCcN9VKGGaPvHX3vWaG/hvocfGDP+MGzMA0bBBKz2fkmQ==",
+      "path": "swashbuckle.aspnetcore/6.4.0",
+      "hashPath": "swashbuckle.aspnetcore.6.4.0.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore.Swagger/6.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nl4SBgGM+cmthUcpwO/w1lUjevdDHAqRvfUoe4Xp/Uvuzt9mzGUwyFCqa3ODBAcZYBiFoKvrYwz0rabslJvSmQ==",
+      "path": "swashbuckle.aspnetcore.swagger/6.4.0",
+      "hashPath": "swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore.SwaggerGen/6.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lXhcUBVqKrPFAQF7e/ZeDfb5PMgE8n5t6L5B6/BQSpiwxgHzmBcx8Msu42zLYFTvR5PIqE9Q9lZvSQAcwCxJjw==",
+      "path": "swashbuckle.aspnetcore.swaggergen/6.4.0",
+      "hashPath": "swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore.SwaggerUI/6.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1Hh3atb3pi8c+v7n4/3N80Jj8RvLOXgWxzix6w3OZhB7zBGRwsy7FWr4e3hwgPweSBpwfElqj4V4nkjYabH9nQ==",
+      "path": "swashbuckle.aspnetcore.swaggerui/6.4.0",
+      "hashPath": "swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
+    },
+    "System.Data.SqlClient/4.9.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-A7RK9I4UaVHJ407GTfy37S4ABHt1+lZ+/uoA54zTv0XaaWgHO5BtXSMzMVqB6socIHEeeK5K1YRgaxCEfD79wQ==",
+      "path": "system.data.sqlclient/4.9.1",
+      "hashPath": "system.data.sqlclient.4.9.1.nupkg.sha512"
+    },
+    "System.Drawing.Common/10.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cmkIduwyVPfuO8kNehu3xNcjo26nMgUoJyfso9S/zTO85YovvPPG0/AFLjanx1iVgQ80OpJVnLb1jU3aIKNLdg==",
+      "path": "system.drawing.common/10.0.1",
+      "hashPath": "system.drawing.common.10.0.1.nupkg.sha512"
+    },
+    "BCP.DataAccess/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BCP.Framework/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BCP.Framework.CacheProvider/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BCP.Framework.Http/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BCP.Framework.Security/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BCP.Logs/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BCP.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BCP.QR.Connector.Authenticate/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
