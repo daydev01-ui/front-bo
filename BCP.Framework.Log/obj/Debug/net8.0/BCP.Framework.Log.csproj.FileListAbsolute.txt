@@ -1,0 +1,13 @@
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.Framework.Log\bin\Debug\net8.0\BCP.Framework.Log.deps.json
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.Framework.Log\bin\Debug\net8.0\BCP.Framework.Log.dll
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.Framework.Log\bin\Debug\net8.0\BCP.Framework.Log.pdb
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.Framework.Log\obj\Debug\net8.0\BCP.Framework.Log.csproj.AssemblyReference.cache
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.Framework.Log\obj\Debug\net8.0\BCP.Framework.Log.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.Framework.Log\obj\Debug\net8.0\BCP.Framework.Log.AssemblyInfoInputs.cache
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.Framework.Log\obj\Debug\net8.0\BCP.Framework.Log.AssemblyInfo.cs
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.Framework.Log\obj\Debug\net8.0\BCP.Framework.Log.csproj.CoreCompileInputs.cache
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.Framework.Log\obj\Debug\net8.0\BCP.Framework.Log.sourcelink.json
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.Framework.Log\obj\Debug\net8.0\BCP.Framework.Log.dll
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.Framework.Log\obj\Debug\net8.0\refint\BCP.Framework.Log.dll
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.Framework.Log\obj\Debug\net8.0\BCP.Framework.Log.pdb
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.Framework.Log\obj\Debug\net8.0\ref\BCP.Framework.Log.dll
