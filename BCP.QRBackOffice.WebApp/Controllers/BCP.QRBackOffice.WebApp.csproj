@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BCP.Connector.Branch\BCP.Connector.Branch.csproj" />
+    <ProjectReference Include="..\BCP.Connector.Business\BCP.Connector.Business.csproj" />
+    <ProjectReference Include="..\BCP.Connector.Notification\BCP.Connector.Notification.csproj" />
+    <ProjectReference Include="..\BCP.Connector.Report\BCP.Connector.Report.csproj" />
+    <ProjectReference Include="..\BCP.Connector.Segurinet\BCP.Connector.Segurinet.csproj" />
+    <ProjectReference Include="..\BCP.Connector.Station\BCP.Connector.Station.csproj" />
+    <ProjectReference Include="..\BCP.Connector.User\BCP.Connector.User.csproj" />
+    <ProjectReference Include="..\BCP.Framework.Log\BCP.Framework.Log.csproj" />
+    <ProjectReference Include="..\BCP.Framework.Security\BCP.Framework.Security.csproj" />
+    <ProjectReference Include="..\BCP.QRBackOffice.Models\BCP.QRBackOffice.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.23" />
+  </ItemGroup>
+
+</Project>

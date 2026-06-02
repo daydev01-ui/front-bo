@@ -1,0 +1,166 @@
+﻿@{
+    ViewData["Title"] = "Reportes QR";
+}
+
+<div class="container mt-4">
+
+    <div class="text-center mb-4">
+        <h3><strong>Reportes QR</strong></h3>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-12">
+
+            <div class="card shadow p-3">
+                <div class="card-body">
+
+                    <h5 class="text-center mb-3">Filtros Avanzados</h5>
+
+                    <!-- EMPRESA -->
+                    <div class="mb-2">
+                        <label>Empresa</label>
+                        <input type="text" class="form-control" id="empresaSearch"
+                               placeholder="Buscar empresa..." autocomplete="off" />
+                        <select class="form-control mt-1" id="empresa" size="5"
+                                style="display:none; overflow-y:auto;">
+                            <option value="">Todas</option>
+                        </select>
+                        <input type="hidden" id="empresaCodigo" value="" />
+                    </div>
+
+                    <!-- ESTADO -->
+                    <div class="mb-2">
+                        <label>Estado</label>
+                        <select class="form-control" id="estado">
+                            <option value="">Todos</option>
+                            <option>Procesados</option>
+                            <option>En Cola</option>
+                        </select>
+                    </div>
+
+                    <!-- MES -->
+                    <div class="mb-2">
+                        <label>Mes</label>
+                        <input type="month" class="form-control" id="month" />
+                    </div>
+
+                    <!-- FECHA INICIO -->
+                    <div class="mb-2">
+                        <label>Fecha Inicio</label>
+                        <input type="date" class="form-control" id="fInicio" />
+                    </div>
+
+                    <!-- FECHA FIN -->
+                    <div class="mb-2">
+                        <label>Fecha Fin</label>
+                        <input type="date" class="form-control" id="fFin" />
+                    </div>
+
+                    <!-- MENSAJE VALIDACIÓN -->
+                    <div id="warningMessage" class="alert alert-warning mt-2" style="display:none;">
+                        La fecha inicial no puede ser mayor que la fecha final.
+                    </div>
+
+                    <!-- BOTONES -->
+                    <div class="d-grid gap-2 mt-3">
+                         <button class="btn btn-success" id="btnExcel">Exportar Excel</button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Select2 CSS -->
+@* <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> *@
+
+<!-- Select2 JS (debe ir despu s de jQuery) -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const monthInput = document.getElementById("month");
+            const startInput = document.getElementById("fInicio");
+            const endInput = document.getElementById("fFin");
+            const msg = document.getElementById("warningMessage");
+            const btnExcel = document.getElementById("btnExcel");
+
+            const hoy = new Date();
+            monthInput.value = hoy.toISOString().slice(0, 7);
+
+            function setFechasMes() {
+                const selectedMonth = monthInput.value;
+                if (!selectedMonth) return;
+                const [year, month] = selectedMonth.split('-').map(Number);
+                const firstDay = new Date(year, month - 1, 1);
+                const lastDay = new Date(year, month, 0);
+                startInput.value = firstDay.toISOString().split('T')[0];
+                endInput.value = lastDay.toISOString().split('T')[0];
+                startInput.min = startInput.value;
+                startInput.max = endInput.value;
+                endInput.min = startInput.value;
+                endInput.max = endInput.value;
+            }
+
+            function validarFechas() {
+                if (!startInput.value || !endInput.value) return;
+                if (new Date(startInput.value) > new Date(endInput.value)) {
+                    msg.style.display = "block";
+                    btnExcel.disabled = true;
+                } else {
+                    msg.style.display = "none";
+                    btnExcel.disabled = false;
+                }
+            }
+
+            function formatearFecha(fecha) {
+                const d = new Date(fecha);
+                const dia = String(d.getDate()).padStart(2, '0');
+                const mes = String(d.getMonth() + 1).padStart(2, '0');
+                return `${dia}/${mes}/${d.getFullYear()}`;
+            }
+
+            startInput.addEventListener("change", validarFechas);
+            endInput.addEventListener("change", validarFechas);
+            monthInput.addEventListener("change", setFechasMes);
+            setFechasMes();
+
+            // -- Cargar empresas via AJAX --------------------------------
+            let todasEmpresas = [];
+
+            $.ajax({
+                url: '@Url.Action("GetAllEmpresas", "Report")',
+                type: 'POST',
+                success: function (data) {
+                    todasEmpresas = data;
+                    console.log('Empresas cargadas:', data.length);
+                    // Poblar el select directamente
+                    const select = document.getElementById("empresa");
+                    data.forEach(function(e) {
+                        const opt = document.createElement('option');
+                        opt.value = e.id;
+                        opt.textContent = e.text;
+                        select.appendChild(opt);
+                    });
+                },
+                error: function (xhr) {
+                    console.error('Error cargando empresas:', xhr.status, xhr.responseText);
+                }
+            });
+
+            // -- Exportar Excel ------------------------------------------
+            btnExcel.addEventListener("click", function () {
+                const empresa = document.getElementById("empresa").value;
+                const estado = document.getElementById("estado").value;
+                const fInicio = formatearFecha(startInput.value);
+                const fFin = formatearFecha(endInput.value);
+                window.location.href = `/Report/ExportarExcel?empresa=${empresa}&estado=${estado}&fInicio=${fInicio}&fFin=${fFin}`;
+            });
+        });
+    </script>
+}

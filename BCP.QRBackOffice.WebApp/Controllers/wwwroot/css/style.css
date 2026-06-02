@@ -1,0 +1,231 @@
+body {
+    font: 90%/1.5em system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif !important;
+}
+
+/* ====================== BACKGROUND DARK MODE ====================== */
+html[data-bs-theme="dark"] {
+    --bs-body-bg: #212529;
+}
+
+/* ====================== BACKGROUND LIGTH MODE ====================== */
+
+html[data-bs-theme="light"] {
+    --bs-body-bg: rgb(250, 250, 250);
+}
+
+/* ====================== HEADER ====================== */
+.navbar {
+    background-color: #0030b3 !important;
+    min-height: 4rem;
+}
+
+html[data-bs-theme="light"] .navbar-brand {
+    color: #0030b3;
+}
+
+html[data-bs-theme="dark"] .navbar-brand {
+    color: #fff;
+}
+
+
+.my-logo {
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 0.25rem;
+    border: 3px solid #000;
+}
+
+.button-icon {
+    border: none;
+    background-color: transparent;
+    border-radius: 8px;
+    padding: 8px;
+    color: #fff;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+[data-bs-theme="dark"] .button-icon:hover {
+    background-color: rgb(0, 40, 151);
+}
+
+[data-bs-theme="light"] .button-icon:hover {
+    background-color: rgb(0, 40, 151);
+}
+
+/* ======================= BUTTONS ======================= */
+.button {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+[data-bs-theme="dark"] .button--show {
+    color: #1d4ed8;
+    filter: drop-shadow(0 0 10px #1d4ed8);
+}
+
+[data-bs-theme="light"] .button--show {
+    color: hsl(234, 69%, 51%); 
+}
+
+[data-bs-theme="dark"] .button--edit {
+    color: hsl(55 75% 60%);
+    filter: drop-shadow(0 0 5px #ff9119);
+}
+
+[data-bs-theme="light"] .button--edit {
+    color: hsl(55, 97%, 25%);
+}
+
+[data-bs-theme="dark"] .button--user {
+    color: hsl(143, 81%, 57%);
+    filter: drop-shadow(0 0 5px #046c4e);
+}
+
+[data-bs-theme="light"] .button--user {
+    color: #046c4e; 
+}
+
+[data-bs-theme="dark"] .button--admin {
+    color: #e96034;
+    filter: drop-shadow(0 0 5px #e96034);
+}
+
+[data-bs-theme="light"] .button--admin {
+    color: #e96034;
+}
+
+
+.button--generate {
+    cursor: pointer;
+}
+
+#btnPassword {
+    cursor: pointer;
+}
+/* ==================== TABLE ==================== */
+[data-bs-theme="dark"] .circle--success {
+    filter: drop-shadow(0 0 4px #10b981);
+}
+
+[data-bs-theme="dark"] .circle--danger {
+    filter: drop-shadow(0 0 4px #ef4444);
+}
+
+.paper {
+    border-radius: 7px;
+}
+
+tr .child ul {
+    width: 100%;
+}
+
+tr .child ul li {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.button-link {
+    position: relative;
+}
+
+.button-link__container::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.button-link__container:hover::after {
+    transform: scaleX(1);
+}
+
+/* ================ MODAL2 =================== */
+.modal2 {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2000;
+    background-color: #0030b3;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal2--show {
+    opacity: 1;
+    pointer-events: unset;
+}
+
+
+/* ================ LOADER =================== */
+.loader {
+    display: none;
+    position: absolute;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    height: 100px;
+    width: 150px;
+    transform: translate(-50%, -50%);
+    z-index: 3000;
+    gap: 1rem;
+}
+
+.loader__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100px;
+    z-index: 3000;
+    color: #F26E29;
+    filter: drop-shadow(0 0 3px #F26E29);
+}
+
+.loader__img {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+}
+
+.loader__spiner {
+    width: 5rem;
+    height: 5rem;
+}
+
+.loader__text {
+    color: #fff;
+    font-weight: 500;
+}
+
+.loader--show {
+    display: flex;
+}
+
+
+/* ====================== ESTILO INPUT INVALID ======================= */
+span.is-invalid {
+    color: #d9534f;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    border-radius: 4px;
+    padding: 2px 8px;
+    display: block;
+}

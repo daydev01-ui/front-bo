@@ -1,0 +1,764 @@
+﻿@using BCP.QRBackOffice.Models.Connectors.Business.v1.Responses
+@model List<BusinessResponse>
+
+@{
+    ViewData["Title"] = "Empresas";
+    ViewData["Username"] = @ViewBag.Username;
+    ViewData["Role"] = @ViewBag.Role;
+}
+
+<div class="mb-3 px-2 d-flex justify-content-between align-items-center">
+    <a href="~/Home/Index" role="button" class="button-link d-flex justify-content-center align-items-center" style="text-decoration: none; color: currentColor;">
+        <div class="button-link__container">
+            <span style="display: block;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                     class="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+                </svg>
+                Volver
+            </span>
+        </div>
+    </a>
+</div>
+
+<div class="mb-3 d-flex justify-content-center">
+    <h3>
+        <strong>@ViewBag.TitleChannel</strong>
+    </h3>
+</div>
+
+<div class="row mb-3 px-2">
+    <div class="col-md-6 col-sm-12 d-flex align-items-center justify-content-md-start justify-content-center mb-3 mb-md-0">
+        <h4 class="mb-0">
+            Empresas
+            <span id="totalBusinesses" class="badge rounded-pill text-bg-primary">0</span>
+        </h4>
+    </div>
+    @if (ViewBag.ChannelName == "MULT" && (ViewBag.Role == "Administrador" || ViewBag.Role == "Escritor"))
+    {
+        <div class="col-md-6 col-sm-12 d-flex align-items-center justify-content-md-end justify-content-center">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalRegisterBusiness">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg size-6"
+                     viewBox="0 0 16 16" stroke-width="1.5" stroke="currentColor">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                </svg>
+                Agregar empresa
+            </button>
+        </div>
+    }
+</div>
+
+<div class="paper p-2">
+    <table id="tableBusiness" class="table table-borderless table-hover align-middle" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col" data-priority="1">Codigo empresa</th>
+                <th scope="col" data-priority="3">Nombre empresa</th>
+                <th scope="col" data-priority="4">Abreviación empresa</th>
+                <th scope="col">Tiene Admin</th>
+                <th scope="col">Creado por</th>
+                <th scope="col">Creado en</th>
+                <th scope="col">Modificado por</th>
+                <th scope="col">Modificado en</th>
+                <th scope="col">Estado</th>
+                <th scope="col" data-priority="2">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Codigo empresa</th>
+                <th>Nombre empresa</th>
+                <th>Abreviación empresa</th>
+                <th>Tiene Admin</th>
+                <th>Creado por</th>
+                <th>Creado en</th>
+                <th>Modificado por</th>
+                <th>Modificado en</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+@* ========================== MODAL REGISTRO DE EMPRESA ========================== *@
+<div class="modal fade" id="modalRegisterBusiness" tabindex="-1" aria-labelledby="modalLabelRegisterBusiness" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form id="formRegisterBusiness" class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalLabelRegisterBusiness">Datos Empresa</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-2">
+                    <label for="formRegisterBusinessName" class="col-form-label">Nombre empresa *</label>
+                    <input id="formRegisterBusinessName" name="businessName" type="text" class="form-control" placeholder="">
+                </div>
+                <div class="mb-2">
+                    <label for="formRegisterBusinessAbbreviation" class="col-form-label">Abreviacion empresa *</label>
+                    <input id="formRegisterBusinessAbbreviation" name="abbreviation" type="text" class="form-control" placeholder="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Agregar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@* ========================== MODAL ACTUALIZACION DE EMPRESA ========================== *@
+<div class="modal fade" id="modalUpdateBusiness" tabindex="-1" aria-labelledby="modalLasbelUpdateBusiness" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form id="formUpdateBusiness" class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalLasbelUpdateBusiness">Editar empresa</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input id="formUpdateBusinessCode" name="businessCode" hidden />
+                <div class="mb-2">
+                    <label for="formUpdateBusinessName" class="col-form-label">Nombre empresa *</label>
+                    <input id="formUpdateBusinessName" name="businessName" type="text" class="form-control" placeholder="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@* ========================== MODAL AGREGAR USAR ADMIN A LA EMPRESA ========================== *@
+<div class="modal fade" id="modalRegisterAdmin" tabindex="-1" aria-labelledby="modalLabelRegisterAdmin" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form id="formRegisterAdmin" class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalLabelRegisterAdmin">Datos Administrador</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input id="formRegisterAdminBusinessCode" name="businessCode" hidden />
+                <input id="formRegisterAdminBusinessName" name="businessName" hidden />
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterAdminFullName" class="col-form-label">Nombre completo *</label>
+                        <input id="formRegisterAdminFullName" name="fullName" type="text" class="form-control" placeholder="">
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterAdminUserName" class="col-form-label">Nombre de usuario *</label>
+                        <div class="input-group">
+                            <span class="input-group-text button--generate" id="btnGenerateUser">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                    <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9" />
+                                    <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z" />
+                                </svg>
+                            </span>
+                            <input id="formRegisterAdminUserName" name="userName" type="text" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterAdminDocumentType" class="col-form-label">Tipo de documento *</label>
+                        <select id="formRegisterAdminDocumentType" name="documentType" class="form-select" aria-label="Documentos">
+                            <option value="" selected>Documentos</option>
+                            <option value="Q">CI</option>
+                            <option value="R">RUC / NIT</option>
+                            <option value="P">Pasaporte</option>
+                            <option value="O">Otros</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterAdminDocumentNumber" class="col-form-label">Numero de documento *</label>
+                        <input id="formRegisterAdminDocumentNumber" name="documentNumber" type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterAdminDocumentExtension" class="col-form-label">Extension *</label>
+                        <select id="formRegisterAdminDocumentExtension" name="documentExtension" class="form-select" aria-label="Extensiones">
+                            <option value="" selected>Extensiones</option>
+                            <option value="LP">La Paz - LP</option>
+                            <option value="SC">Santa Cruz - SC</option>
+                            <option value="CB">Cochabamba - CB</option>
+                            <option value="PT">Potosi - PT</option>
+                            <option value="TJ">Tarija - TJ</option>
+                            <option value="BN">Beni - BN</option>
+                            <option value="PN">Pando - PN</option>
+                            <option value="OR">Oruro - OR</option>
+                            <option value="CH">Chuquisaca - CH</option>
+                            <option value="PE">Extranjero - PE</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterAdminUserPhone" class="col-form-label">Telefono</label>
+                        <input id="formRegisterAdminUserPhone" name="userPhone" type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <label for="formRegisterAdminCredentialsEmail" class="col-form-label">Correos de notificación de acceso a Multiplica</label>
+                        <div id="emailHelp" class="form-text mb-1 mt-0">Por favor, ingrese al menos un correo electrónico y hasta un máximo de tres, separados por punto y coma (“;”).</div>
+                        <textarea id="formRegisterCredentialsEmail" name="credentialsEmail" style="resize: none" class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Agregar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+           var role = '@ViewBag.Role';
+           var channelName = '@ViewBag.ChannelName';
+           var table = $('#tableBusiness').DataTable({
+                "columnDefs": [],
+                "language": {
+                    "search": "Buscar empresa:",
+                    "lengthMenu": "Mostrar _MENU_ empresas",
+                    "zeroRecords": "No se encontraron resultados",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ empresas",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 empresas",
+                    "infoFiltered": "(filtrado de _MAX_ total empresas)",
+                    "emptyTable": "No hay empresas registradas"
+                },
+                "responsive": true,
+                "order": [[0, "desc"]],
+                "lengthMenu": [10, 15, 20],
+                "pagingType": "simple_numbers",
+                "columns": [
+                    {
+                        "data": 'businessCode',
+                        "title": 'Codigo empresa'
+                    },
+                    {
+                       "data": 'businessName',
+                       "title": 'Nombre empresa',
+                       render: function (data, type, row) {
+                          return `<strong>${data}</strong>`;
+                       }
+                    },
+                    {
+                        "data": 'abbreviation',
+                        "title": 'Abreviación empresa'
+                    },
+                    {
+                       "data": 'isUserAdmin',
+                       "title": 'Tiene Admin',
+                       "visible": (channelName === 'MULT'),
+                       render: function (data, type, row) {
+                           return `
+                                <div class="d-flex align-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="${data ? '#10b981' : '#ef4444'}" class="me-2 bi bi-circle-fill circle--${data ? 'success' : 'danger'}" viewBox="0 0 16 16">
+                                        <circle cx="8" cy="8" r="8"/>
+                                    </svg>
+                                    ${data ? 'Si' : 'No'}
+                                </div>
+                           `;
+                       }
+                    },
+                    {
+                        "data": 'creationUser',
+                        "title": 'Creado por'
+                    },
+                    {
+                        "data": 'creationDate',
+                        "title": 'Creado en'
+                    },
+                    {
+                        "data": 'modificationUser',
+                        "title": 'Modificador por'
+                    },
+                    {
+                        "data": 'modificationDate',
+                        "title": 'Modificado en'
+                    },
+                    {
+                       "data": 'state',
+                       "title": 'Estado',
+                       render: function (data, type, row) {
+                           return `
+                                <span class="badge text-bg-${data ? 'success' : 'danger'}">
+                                    ${data ? 'Activo' : 'Inactivo'}
+                                </span>
+                           `;
+                       }
+                    },
+                    {
+                       "data": null,
+                       "title": 'Acciones',
+                       "orderable": false,
+                       render: function (data, type, row) {
+                           return actionsButtons(row, channelName, role);
+                       }
+                    }
+                 ]
+           });
+           
+           $.validator.addMethod("multiEmail", function (value, element) {
+                if (!value) return false;
+                if (/;;+/.test(value) || value.startsWith(";") || value.endsWith(";")) return false;
+                const emails = value.split(";").map(e => e.trim()).filter(e => e.length > 0);
+                if (emails.length === 0 || emails.length > 3) return false;
+                const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+                return emails.every(email => emailRegex.test(email));
+            }, "Ingrese entre 1 y 3 correos válidos separados por ';'");
+            
+            
+            $.validator.addMethod("noSpaces", function(value, element) {
+                return this.optional(element) || /^[^\s]+$/.test(value);
+            }, "El campo no debe contener espacios.");
+
+           loadBusiness(table);
+
+           validateAndRegisterBusinnes(table, 'formRegisterBusiness');
+
+           validateAndUpdateBusinnes(table, 'formUpdateBusiness');
+
+           validateAndRegisterAdminBusiness(table, 'formRegisterAdmin');
+
+           HandleGenerateUsername('formRegisterAdminUserName', 'btnGenerateUser');
+       });
+
+        let HandleGenerateUsername = (input, btnId) => {
+             $(`#${btnId}`).on('click', function () {
+               const businessCode = $('#formRegisterAdminBusinessCode').val().trim();
+               const fullName = $('#formRegisterAdminFullName').val().trim();
+               const documetNumber = $('#formRegisterAdminDocumentNumber').val().trim();
+               if(!fullName){
+                   alertError('Generar usuario', 'Por favor, ingrese un nombre completo antes de generar el nombre de usuario.');
+                   return;
+               }
+               if(!documetNumber){
+                   alertError('Generar usuario', 'Por favor, ingrese un numero de documento antes de generar el nombre de usuario.');
+                   return;
+               }
+               const userName = generateUserName(businessCode, fullName, documetNumber);
+               $(`#${input}`)
+               .val(userName)
+               .removeClass('is-invalid')
+               .addClass('is-valid')
+               .next('span.error, span.is-invalid').remove();
+           });
+        }
+
+        let generateUserName = (businessCode, fullName, documetNumber) => {
+            const initials = fullName.split(' ').slice(0, 2).map(palabra => palabra.charAt(0).toLowerCase()).join('');
+            const numbers = documetNumber.charAt(0) + documetNumber.charAt(documetNumber.length - 1)
+            return ('Adm' + numbers + initials + businessCode.substring(0, 3).padEnd(3, '0') + generateRandomCode(3));
+        }
+
+        let generateRandomCode = (length = 3) => {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        let actionsButtons = (row, channelName, role) => {
+            if (channelName === 'MULT' && (role === 'Administrador' || role === 'Escritor')) {
+                return `
+                <div style="display: flex; gap: 0.5rem;">
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" 
+                        data-bs-trigger="hover" data-bs-placement="top" data-bs-content="Agregar Administrador">
+                        <button class="button button--admin" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                                <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
+                            </svg>
+                        </button>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
+                        data-bs-trigger="hover" data-bs-placement="top" data-bs-content="Ver sucursales">
+                        <a class="button button--show" href="@Url.Action("Index", "Branch")?businessCode=${encodeURIComponent(row.businessCode)}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
+                            </svg>
+                        </a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
+                        data-bs-trigger="hover" data-bs-placement="top" data-bs-content="Editar empresa">
+                        <button class="button button--edit" type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            </svg>
+                        </button>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
+                        data-bs-trigger="hover" data-bs-placement="top" data-bs-content="Ver usuarios">
+                        <a class="button button--user" href="@Url.Action("Index", "User")?businessCode=${encodeURIComponent(row.businessCode)}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                            </svg>
+                        </a>
+                    </span>
+                </div>
+            `;
+            }
+            return `
+                    <div style="display: flex; gap: 0.5rem;">
+
+                        <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
+                            data-bs-trigger="hover" data-bs-placement="top" data-bs-content="Ver sucursales"
+                            data-bs-custom-class="custom-tooltip">
+                            <a class="button button--show" href="@Url.Action("Index", "Branch")?businessCode=${encodeURIComponent(row.businessCode)}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
+                                </svg>
+                            </a>
+                        </span>
+
+                        <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
+                            data-bs-trigger="hover" data-bs-placement="top" data-bs-content="Ver usuarios">
+                            <a class="button button--user" href="@Url.Action("Index", "User")?businessCode=${encodeURIComponent(row.businessCode)}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                                </svg>
+                            </a>
+                        </span>
+
+                    </div>
+                `;
+        }
+
+        let validateAndRegisterBusinnes = (table, formId) => {
+            $(`#${formId}`).validate({
+               "rules": {
+                   "businessName": {
+                       "required": true,
+                       "minlength": 2,
+                       "maxlength": 50
+                   },
+                   "abbreviation": {
+                       "required": true,
+                       "minlength": 4,
+                       "maxlength": 10
+                   }
+               },
+               "messages": {
+                   "businessName": {
+                       "required": "El campo no debe ser vacio.",
+                       "minlength": "El campo debe tener al menos {0} caracteres",
+                       "maxlength": "El campo debe tener maximo {0} caracteres"
+                   },
+                   "abbreviation": {
+                       "required": "El campo no debe ser vacio.",
+                       "minlength": "El campo debe tener al menos {0} caracteres",
+                       "maxlength": "El campo debe tener maximo {0} caracteres"
+                   }
+                },
+                "errorClass": "is-invalid",
+                "validClass": "is-valid",
+                "errorElement": "span",
+                "highlight": function (element, errorClass, validClass) {
+                    $(element).addClass(errorClass).removeClass(validClass);
+                },
+                "unhighlight": function (element, errorClass, validClass) {
+                    $(element).removeClass(errorClass).addClass(validClass);
+                },
+                "submitHandler": function (form, e) {
+                    showLoader();
+                    e.preventDefault();
+                    const formData = new FormData(form);
+                    const body = Object.fromEntries(formData.entries());
+                    $.ajax({
+                        "url": '@Url.Action("Register", "Business")',
+                        "type": 'POST',
+                        "data": JSON.stringify(body),
+                        "contentType": 'application/json',
+                        success: function (resp) {
+                            table.row.add(resp).draw();
+                            showTooltips();
+                            hideModal('modalRegisterBusiness');
+                            resetForm('formRegisterBusiness');
+                            countRows(table, 'totalBusinesses');
+                            alertSuccess(resp.businessName, `Empresa <strong>#${resp.businessCode}</strong> creada correctamente.`);
+                        },
+                        error: function (xhr) {
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                alertError('Agregar empresa', xhr.responseJSON.message);
+                            } else {
+                                alertError('Agregar empresa', 'Ha ocurrido un error inesperado.');
+                            }
+                        },
+                        complete: function () {
+                            hideLoader();
+                        }
+                    });
+                 }
+            });
+        }
+
+        let validateAndUpdateBusinnes = (table, formId) => {
+            $('#tableBusiness').on('click', '.button--edit', function () {
+                openUpdateBusinessModal(this);
+            });
+
+            $(`#${formId}`).validate({
+              "rules": {
+                 "businessName": {
+                    "required": true,
+                    "minlength": 2,
+                    "maxlength": 50
+                 }
+              },
+              "messages": {
+                 "businessName": {
+                    "required": "El campo no debe ser vacio.",
+                    "minlength": "El campo debe tener al menos {0} caracteres",
+                    "maxlength": "El campo debe tener maximo {0} caracteres"
+                 }
+              },
+              "errorClass": "is-invalid",
+              "validClass": "is-valid",
+              "errorElement": "span",
+              highlight: function (element, errorClass, validClass) {
+                 $(element).addClass(errorClass).removeClass(validClass);
+              },
+              unhighlight: function (element, errorClass, validClass) {
+                 $(element).removeClass(errorClass).addClass(validClass);
+              },
+              submitHandler: function (form, e) {
+                 showLoader();
+                 e.preventDefault();
+                 const formData = new FormData(form);
+                 const body = Object.fromEntries(formData.entries());
+                 $.ajax({
+                    "url": '@Url.Action("Update", "Business")',
+                    "type": 'POST',
+                    "data": JSON.stringify(body),
+                    "contentType": 'application/json',
+                    success: function (resp) {
+                       var row = table.row(function (idx, data, node) {
+                          return data.businessCode == body.businessCode;
+                       });
+                       if (row.length) {
+                          var rowData = row.data();
+                          rowData.businessName = resp.businessName;
+                          rowData.modificationUser = resp.modificationUser;
+                          rowData.modificationDate = resp.modificationDate;
+                          row.data(rowData).draw(false);
+                       };
+                       showTooltips();
+                       hideModal('modalUpdateBusiness');
+                       resetForm('formUpdateBusiness');
+                       alertSuccess(body.businessName, `Empresa <strong>#${resp.businessCode}</strong> actualizada correctamente.`);
+                    },
+                    error: function (xhr) {
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            alertError('Actualizar empresa', xhr.responseJSON.message);
+                        } else {
+                            alertError('Actualizar empresa', 'Ha ocurrido un error inesperado.');
+                        }
+                    },
+                    complete: function () {
+                       hideLoader();
+                    }
+                 });
+              }
+           });
+        }
+
+        let validateAndRegisterAdminBusiness = (table, formId) => {
+            $('#tableBusiness').on('click', '.button--admin', function () {
+              openRegisterAdminModal(this);
+           });
+
+            $(`#${formId}`).validate({
+                "rules": {
+                    "fullName": {
+                        "required": true,
+                        "minlength": 2,
+                        "maxlength": 50
+                    },
+                    "userName": {
+                        "required": true,
+                        "minlength": 2,
+                        "maxlength": 20,
+                        "noSpaces": true
+                    },
+                    "documentType": {
+                        "required": true
+                    },
+                    "documentNumber": {
+                        "required": true,
+                        "minlength": 5,
+                        "maxlength": 15
+                    },
+                    "documentExtension": {
+                        "required": true
+                    },
+                    "userPhone": {
+                        "rangelength": [8, 8],
+                        "digits": true
+                    },
+                    "credentialsEmail": {
+                        "multiEmail": true
+                    }
+                },
+                "messages": {
+                    "fullName": {
+                        "required": "El campo no debe ser vacio.",
+                        "minlength": "El campo debe tener al menos {0} caracteres",
+                        "maxlength": "El campo debe tener maximo {0} caracteres"
+                    },
+                    "userName": {
+                        "required": "El campo no debe ser vacio.",
+                        "minlength": "El campo debe tener al menos {0} caracteres",
+                        "maxlength": "El campo debe tener maximo {0} caracteres",
+                        "noSpaces": "El campo no debe contener espacios."
+                    },
+                    "documentType": {
+                        "required": "El campo no debe ser vacio."
+                    },
+                    "documentNumber": {
+                        "required": "El campo no debe ser vacio.",
+                        "minlength": "El campo debe tener al menos {0} caracteres",
+                        "maxlength": "El campo debe tener maximo {0} caracteres"
+                    },
+                    "documentExtension": {
+                        "required": "El campo no debe ser vacio."
+                    },
+                    "userPhone": {
+                        "rangelength": "El teléfono debe tener exactamente 8 dígitos.",
+                        "digits": "Solo se permiten números."
+                    },
+                    "credentialsEmail": {
+                        "multiEmail": "Debe ingresar entre 1 y 3 correos válidos separados por ';'.",
+                    }
+                },
+                "errorClass": "is-invalid",
+                "validClass": "is-valid",
+                "errorElement": "span",
+                "highlight": function (element, errorClass, validClass) {
+                    $(element).addClass(errorClass).removeClass(validClass);
+                },
+                "unhighlight": function (element, errorClass, validClass) {
+                    $(element).removeClass(errorClass).addClass(validClass);
+                },
+                "submitHandler": function (form, e) {
+                    showLoader();
+                    e.preventDefault();
+                    const formData = new FormData(form);
+                    const body = Object.fromEntries(formData.entries());
+                    $.ajax({
+                        "url": '@Url.Action("AddUserAdmin", "Business")',
+                        "type": 'POST',
+                        "data": JSON.stringify(body),
+                        "contentType": 'application/json',
+                        success: function (resp) {
+                           var row = table.row(function (idx, data, node) {
+                                return data.businessCode == body.businessCode;
+                            });
+                            if (row.length) {
+                                var rowData = row.data();
+                                console.log(resp);
+                                rowData.isUserAdmin = resp.isUserAdmin;
+                                rowData.modificationUser = resp.modificationUser;
+                                rowData.modificationDate = resp.modificationDate;
+                                row.data(rowData).draw(false);
+                            };
+                            showTooltips();
+                            hideModal('modalRegisterAdmin');
+                            resetForm('formRegisterAdmin');
+                            alertSuccess(resp.businessName, `Empresa <strong>#${resp.businessCode}</strong>, usuario administrador agregado correctamente.`);
+                        },
+                        error: function (xhr) {
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                alertError('Agregar ususario administrador', xhr.responseJSON.message);
+                            } else {
+                                alertError('Agregar ususario administrador', 'Ha ocurrido un error inesperado.');
+                            }
+                        },
+                        complete: function () {
+                            hideLoader();
+                        }
+                    });
+                }
+            });
+        }
+
+        let loadBusiness = (table) => {
+           showLoader();
+           $.ajax({
+              url: '@Url.Action("GetAll", "Business")',
+              type: 'POST',
+              contentType: 'application/json',
+              dataSrc: '',
+              success: function (resp) {
+                 table.clear();
+                 table.rows.add(resp).draw();
+                 countRows(table, 'totalBusinesses');
+                 showTooltips();
+              },
+              error: function (xhr, status, error) {
+                  if (xhr.responseJSON && xhr.responseJSON.message) {
+                      alertError('Obtener empresas', xhr.responseJSON.message);
+                  } else {
+                      alertError('Obtener empresas', 'Ha ocurrido un error inesperado.');
+                  }
+              },
+              complete: function () {
+                 hideLoader();
+              }
+           });
+        }
+
+        let openUpdateBusinessModal = (button) => {
+           const row = $(button).closest('tr');
+           const businessCode = row.find('td').eq(0).text().trim();
+           const businessName = row.find('td strong').text().trim();
+           $('#formUpdateBusinessCode').val(businessCode);
+           $('#formUpdateBusinessName').val(businessName);
+           showModal('modalUpdateBusiness');
+        }
+
+        let openRegisterAdminModal = (button) => {
+           const row = $(button).closest('tr');
+           const businessCode = row.find('td').eq(0).text().trim();
+           const businessName = row.find('td strong').text().trim();
+           const isUserAdmin = row.find('td').eq(3).text().trim();
+           if(isUserAdmin == 'Si')
+           {
+               alertError('Agregar usuario administrador', 'La empresa ya tiene un usuario administrador registrado.');
+               hideModal('modalRegisterAdmin');
+               return;
+           }
+           $('#formRegisterAdminBusinessCode').val(businessCode);
+           $('#formRegisterAdminBusinessName').val(businessName);
+           showModal('modalRegisterAdmin');
+        }
+
+        let showModal = (modalId) => $(`#${modalId}`).modal('show');
+        let hideModal = (modalId) => $(`#${modalId}`).modal('hide');
+        let resetForm = (formId) => {
+           $(`#${formId}`)[0].reset();
+           $(`#${formId}`).find('.is-valid, .is-invalid').removeClass('is-valid is-invalid');
+        }
+        let countRows = (table, containerId) => $(`#${containerId}`).html(table.data().count());
+        let showTooltips = () => $('[data-bs-toggle="popover"]').each(function () { new bootstrap.Popover(this); });
+    </script>
+}

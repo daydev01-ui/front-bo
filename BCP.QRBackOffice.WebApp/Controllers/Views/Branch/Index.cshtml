@@ -1,0 +1,709 @@
+﻿@{
+    ViewData["Title"] = "Sucursales";
+    ViewData["Username"] = @ViewBag.Username;
+    ViewData["Role"] = @ViewBag.Role;
+}
+
+<div class="mb-3 px-2 d-flex justify-content-between align-items-center">
+    <a href="~/Business/Index?ChannelName=@ViewBag.ChannelName" role="button" class="button-link d-flex justify-content-center align-items-center" style="text-decoration: none; color: currentColor;">
+        <div class="button-link__container">
+            <span style="display: block;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                     class="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+                </svg>
+                Volver
+            </span>
+        </div>
+    </a>
+</div>
+
+
+<div class="mb-3 d-flex justify-content-center">
+    <h3>
+        <strong>@ViewBag.TitleChannel</strong>
+    </h3>
+</div>
+
+<div class="container-fluid d-flex justify-content-center p-0 mb-3">
+    <div class="row g-3 justify-content-center" style="width: 100%;">
+        <div class="col-xl-4 col-sm-12 text-center">
+            <div class="card">
+                <div class="card-body p-2">
+                    <strong>Empresa:</strong>
+                    @ViewBag.BusinessName
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3 px-2">
+    <div class="col-md-6 col-sm-12 d-flex align-items-center justify-content-md-start justify-content-center mb-3 mb-md-0">
+        <h4 class="mb-0">
+            Sucursales
+            <span id="totalBranches" class="badge rounded-pill text-bg-primary">0</span>
+        </h4>
+    </div>
+    @if (ViewBag.ChannelName == "MULT" && (ViewBag.Role == "Administrador" || ViewBag.Role == "Escritor"))
+    {
+        <div class="col-md-6 col-sm-12 d-flex align-items-center justify-content-md-end justify-content-center">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalRegisterBranch">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg size-6"
+                     viewBox="0 0 16 16" stroke-width="1.5" stroke="currentColor">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                </svg>
+                Agregar sucursal
+            </button>
+        </div>
+    }
+
+</div>
+
+<div class="paper p-2">
+    <table id="tableBranch" class="table table-borderless table-hover align-middle" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col" data-priority="1">Codigo sucursal</th>
+                <th scope="col" data-priority="3">Nombre sucursal</th>
+                <th scope="col" data-priority="4">Ciudad sucursal</th>
+                <th scope="col">Codigo usuario</th>
+                <th scope="col">Nombre usuario</th>
+                <th scope="col">Creado por</th>
+                <th scope="col">Creado en</th>
+                <th scope="col">Modificado por</th>
+                <th scope="col">Modificado en</th>
+                <th scope="col">Estado</th>
+                <th scope="col" data-priority="2">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Codigo sucursal</th>
+                <th>Nombre sucursal</th>
+                <th>Ciudad sucursal</th>
+                <th>Codigo usuario</th>
+                <th>Nombre usuario</th>
+                <th>Creado por</th>
+                <th>Creado en</th>
+                <th>Modificado por</th>
+                <th>Modificado en</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+@* ========================== MODAL REGISTRO DE SUCURSAL ========================== *@
+<div class="modal fade" id="modalRegisterBranch" tabindex="-1" aria-labelledby="modalLabelRegisterBranch"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form id="formRegisterBranch" class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalLabelRegisterBranch">Datos sucursal</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterBranchName" class="col-form-label">Nombre sucursal *</label>
+                        <input id="formRegisterBranchName" name="branchName" type="text" class="form-control" placeholder="">
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterBranchCity" class="col-form-label">Ciudad sucursal *</label>
+                        <select id="formRegisterBranchCity" class="form-select" name="branchCity" aria-label="Ciudad sucursal">
+                            <option value="" selected>Ciudades</option>
+                            <option value="La Paz">La Paz</option>
+                            <option value="El Alto">El Alto</option>
+                            <option value="Cochabamba">Cochabamba</option>
+                            <option value="Santa Cruz">Santa Cruz</option>
+                            <option value="Tarija">Tarija</option>
+                            <option value="Beni">Beni</option>
+                            <option value="Pando">Pando</option>
+                            <option value="Oruro">Oruro</option>
+                            <option value="Potosi">Potosi</option>
+                            <option value="Chuquisaca">Chuquisaca</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterFullName" class="col-form-label">Nombre completo *</label>
+                        <input id="formRegisterFullName" name="fullName" type="text" class="form-control" placeholder="">
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterUserName" class="col-form-label">Nombre de usuario</label>
+                        <div class="input-group">
+                            <span class="input-group-text button--generate" id="btnGenerateUser">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                    <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9" />
+                                    <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z" />
+                                </svg>
+                            </span>
+                            <input id="formRegisterUserName" name="userName" type="text" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterDocumentType" class="col-form-label">Tipo de documento *</label>
+                        <select id="formRegisterDocumentType" name="documentType" class="form-select" aria-label="Documentos">
+                            <option value="" selected>Documentos</option>
+                            <option value="Q">CI</option>
+                            <option value="R">RUC / NIT</option>
+                            <option value="P">Pasaporte</option>
+                            <option value="O">Otros</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterDocumentNumber" class="col-form-label">Numero de documento *</label>
+                        <input id="formRegisterDocumentNumber" name="documentNumber" type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterDocumentExtension" class="col-form-label">Extension *</label>
+                        <select id="formRegisterDocumentExtension" name="documentExtension" class="form-select" aria-label="Extensiones">
+                            <option value="" selected>Extensiones</option>
+                            <option value="LP">La Paz - LP</option>
+                            <option value="SC">Santa Cruz - SC</option>
+                            <option value="CB">Cochabamba - CB</option>
+                            <option value="PT">Potosi - PT</option>
+                            <option value="TJ">Tarija - TJ</option>
+                            <option value="BN">Beni - BN</option>
+                            <option value="PN">Pando - PN</option>
+                            <option value="OR">Oruro - OR</option>
+                            <option value="CH">Chuquisaca - CH</option>
+                            <option value="PE">Extranjero - PE</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterUserPhone" class="col-form-label">Telefono</label>
+                        <input id="formRegisterUserPhone" name="userPhone" type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterCredentialsEmail" class="col-form-label">Correos de notificación de acceso a Multiplica</label>
+                        <div id="emailHelp" class="form-text mb-1 mt-0">Por favor, ingrese al menos un correo electrónico y hasta un máximo de tres, separados por punto y coma (“;”).</div>
+                        <textarea id="formRegisterCredentialsEmail" class="form-control" style="resize: none" name="credentialsEmail" rows="5"></textarea>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterNotificationsEmail" class="col-form-label">Correos para notificar pagos realizados por QR</label>
+                        <div id="emailHelp" class="form-text mb-1 mt-0">Por favor, ingrese al menos un correo electrónico y hasta un máximo de tres, separados por punto y coma (“;”).</div>
+                        <textarea id="formRegisterNotificationsEmail" class="form-control" style="resize: none" name="notificationsEmail" rows="5"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Agregar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@* ========================== MODAL ACTUALIZACION DE SUCURSAL ========================== *@
+<div class="modal fade" id="modalUpdateBranch" tabindex="-1" aria-labelledby="modalLabelUpdateBranch"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form id="formUpdateBranch" class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalLabelUpdateBranch">Editar sucursal</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input id="formUpdateBranchCode" name="branchCode" hidden />
+                <input id="formUpdateUserCode" name="userCode" hidden />
+                <div class="mb-2">
+                    <label for="formUpdateBranchName" class="col-form-label">Nombre Sucursal *</label>
+                    <input id="formUpdateBranchName" type="text" name="branchName" class="form-control" placeholder="">
+                </div>
+
+                <div class="mb-2">
+                    <label for="formUpdateBranchCity" class="col-form-label">Ciudad Sucursal *</label>
+                    <select id="formUpdateBranchCity" name="branchCity" class="form-select" aria-label="Ciudad sucursal">
+                        <option value="La Paz">La Paz</option>
+                        <option value="El Alto">El Alto</option>
+                        <option value="Cochabamba">Cochabamba</option>
+                        <option value="Santa Cruz">Santa Cruz</option>
+                        <option value="Tarija">Tarija</option>
+                        <option value="Beni">Beni</option>
+                        <option value="Pando">Pando</option>
+                        <option value="Oruro">Oruro</option>
+                        <option value="Potosi">Potosi</option>
+                        <option value="Chuquisaca">Chuquisaca</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var role = '@ViewBag.Role';
+            var channelName = '@ViewBag.ChannelName';
+            var businessCode = '@ViewBag.BusinessCode';
+            var table = $('#tableBranch').DataTable({
+                "columnDefs": [],
+                "language": {
+                    "search": "Buscar sucursal:",
+                    "lengthMenu": "Mostrar _MENU_ sucurales",
+                    "zeroRecords": "No se encontraron resultados",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ sucursales",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 sucursales",
+                    "infoFiltered": "(filtrado de _MAX_ total sucursales)",
+                    "emptyTable": "No hay sucursales registradas"
+                },
+                "responsive": true,
+                "order": [[0, "asc"]],
+                "lengthMenu": [10, 15, 20],
+                "pagingType": "simple_numbers",
+                "columns":
+                    [
+                        {
+                            "data": 'branchCode',
+                            "title": 'Codigo sucursal'
+                        },
+                        {
+                            "data": 'branchName',
+                            "title": 'Nombre sucursal',
+                            render: function (data, type, row) {
+                                return `<strong>${data}</strong>`;
+                            }
+                        },
+                        {
+                            "data": 'branchCity',
+                            "title": 'Ciudad sucursal'
+                        },
+                        {
+                            "data": 'userCode',
+                            "title": 'Codigo usuario'
+                        },
+                        {
+                            "data": 'userName',
+                            "title": 'Nombre usuario'
+                        },
+                        {
+                            "data": 'creationUser',
+                            "title": 'Creado por'
+                        },
+                        {
+                            "data": 'creationDate',
+                            "title": 'Creado en'
+                        },
+                        {
+                            "data": 'modificationUser',
+                            "title": 'Modificado por'
+                        },
+                        {
+                            "data": 'modificationDate',
+                            "title": 'Modificado en'
+                        },
+                        {
+                            "data": 'state',
+                            "title": 'Estado',
+                            render: function (data, type, row) {
+                               return `
+                                    <span class="badge text-bg-${data ? 'success' : 'danger'}">
+                                        ${data ? 'Activo' : 'Inactivo'}
+                                    </span>
+                               `;
+                            }
+                        },
+                        {
+                            "data": null,
+                            "title": 'Acciones',
+                            "orderable": false,
+                            render: function (data, type, row) {
+                                return actionsButtons(row, channelName, role);
+                            }
+                        }
+                    ]
+            });
+            
+            $.validator.addMethod("branchNameUnique", function (value, element) {
+                const branchCode = $('#formUpdateBranchCode').val().trim();
+                return !branchNameExists(table, value, branchCode);
+            }, "El nombre de la sucursal ya existe.");
+
+            $.validator.addMethod("multiEmail", function (value, element) {
+                if (!value) return false;
+                if (/;;+/.test(value) || value.startsWith(";") || value.endsWith(";")) return false;
+                const emails = value.split(";").map(e => e.trim()).filter(e => e.length > 0);
+                if (emails.length === 0 || emails.length > 3) return false;
+                const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+                return emails.every(email => emailRegex.test(email));
+            }, "Ingrese entre 1 y 3 correos válidos separados por ';'");
+            
+            $.validator.addMethod("noSpaces", function(value, element) {
+                return this.optional(element) || /^[^\s]+$/.test(value);
+            }, "El campo no debe contener espacios.");
+
+            loadBranch(table);
+
+            validateAndRegisterBranch(table, 'formRegisterBranch');
+
+            validateAndUpdateBranch(table, 'formUpdateBranch');
+
+            HandleGenerateUsername('formRegisterUserName', 'btnGenerateUser', businessCode);
+
+        });
+
+        let HandleGenerateUsername = (input, btnId, businessCode) => {
+             $(`#${btnId}`).on('click', function () {
+               const fullName = $('#formRegisterFullName').val().trim();
+               const documetNumber = $('#formRegisterDocumentNumber').val().trim();
+               if(!fullName){
+                   alertError('Generar usuario', 'Por favor, ingrese un nombre completo antes de generar el nombre de usuario.');
+                   return;
+               }
+               if(!documetNumber){
+                   alertError('Generar usuario', 'Por favor, ingrese un numero de documento antes de generar el nombre de usuario.');
+                   return;
+               }
+               const userName = generateUserName(businessCode, fullName, documetNumber);
+               $(`#${input}`)
+               .val(userName)
+               .removeClass('is-invalid')
+               .addClass('is-valid')
+               .next('span.error, span.is-invalid').remove();
+           });
+        }
+
+        let generateUserName = (businessCode, fullName, documetNumber) => {
+            const initials = fullName.split(' ').slice(0, 2).map(palabra => palabra.charAt(0).toLowerCase()).join('');
+            const numbers = documetNumber.charAt(0) + documetNumber.charAt(documetNumber.length - 1)
+            return ('Suc' + numbers + initials + businessCode.substring(0, 3).padEnd(3, '0') + generateRandomCode(3));
+        }
+
+        let generateRandomCode = (length = 3) => {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+
+        let actionsButtons = (row, channelName, role) => {
+            if (channelName === 'MULT' && role === 'Administrador') {
+                return `
+                <div style="display: flex; gap: 0.5rem;">
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
+                        data-bs-trigger="hover" data-bs-placement="top" data-bs-content="Ver cajas"
+                        data-bs-custom-class="custom-tooltip">
+                        <a class="button button--show" href="@Url.Action("Index", "Station")?branchCode=${encodeURIComponent(row.branchCode)}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
+                            </svg>
+                        </a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
+                        data-bs-trigger="hover" data-bs-placement="top" data-bs-content="Editar sucursal">
+                        <button class="button button--edit" type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            </svg>
+                        </button>
+                    </span>
+                </div>
+                `;
+            }
+            return `
+            <div style="display: flex; gap: 0.5rem;">
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
+                    data-bs-trigger="hover" data-bs-placement="top" data-bs-content="Ver cajas"
+                    data-bs-custom-class="custom-tooltip">
+                    <a class="button button--show" href="@Url.Action("Index", "Station")?branchCode=${encodeURIComponent(row.branchCode)}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
+                        </svg>
+                    </a>
+                </span>
+            </div>
+            `;
+        }
+        
+        let validateAndRegisterBranch = (table, formId) => {
+             $(`#${formId}`).validate({
+                "rules": {
+                    "branchName": {
+                        "required": true,
+                        "minlength": 2,
+                        "maxlength": 30,
+                        "branchNameUnique": true
+                    },
+                    "branchCity": {
+                        "required": true
+                    },
+                    "fullName": {
+                        "required": true,
+                        "minlength": 2,
+                        "maxlength": 50
+                    },
+                    "userName": {
+                        "required": true,
+                        "minlength": 2,
+                        "maxlength": 20,
+                        "noSpaces": true
+                    },
+                    "documentType": {
+                        "required": true
+                    },
+                    "documentNumber": {
+                        "required": true,
+                        "minlength": 5,
+                        "maxlength": 15
+                    },
+                    "documentExtension": {
+                        "required": true
+                    },
+                    "userPhone": {
+                        "rangelength": [8, 8],
+                        "digits": true
+                    },
+                    "credentialsEmail": {
+                        "multiEmail": true
+                    },
+                    "notificationsEmail": {
+                        "multiEmail": true
+                    }
+                },
+                "messages": {
+                    "branchName": {
+                        "required": "El campo no debe ser vacio.",
+                        "minlength": "El campo debe tener al menos {0} caracteres",
+                        "maxlength": "El campo debe tener maximo {0} caracteres",
+                        "branchNameUnique": "El nombre de la sucursal ya existe."
+                    },
+                    "branchCity": {
+                        "required": "El campo no debe ser vacio."
+                    },
+                    "fullName": {
+                        "required": "El campo no debe ser vacio.",
+                        "minlength": "El campo debe tener al menos {0} caracteres",
+                        "maxlength": "El campo debe tener maximo {0} caracteres"
+                    },
+                    "userName": {
+                        "required": "El campo no debe ser vacio.",
+                        "minlength": "El campo debe tener al menos {0} caracteres",
+                        "maxlength": "El campo debe tener maximo {0} caracteres",
+                        "noSpaces": "El campo no debe contener espacios."
+                    },
+                    "documentType": {
+                        "required": "El campo no debe ser vacio."
+                    },
+                    "documentNumber": {
+                        "required": "El campo no debe ser vacio.",
+                        "minlength": "El campo debe tener al menos {0} caracteres",
+                        "maxlength": "El campo debe tener maximo {0} caracteres"
+                    },
+                    "documentExtension": {
+                        "required": "El campo no debe ser vacio."
+                    },
+                    "userPhone": {
+                        "rangelength": "El teléfono debe tener exactamente 8 dígitos.",
+                        "digits": "Solo se permiten números."
+                    },
+                    "credentialsEmail": {
+                        "multiEmail": "Debe ingresar entre 1 y 3 correos válidos separados por ';'.",
+                    },
+                    "notificationsEmail": {
+                        "multiEmail": "Debe ingresar entre 1 y 3 correos válidos separados por ';'.",
+                    }
+                },
+                "errorClass": "is-invalid",
+                "validClass": "is-valid",
+                "errorElement": "span",
+                "highlight": function (element, errorClass, validClass) {
+                    $(element).addClass(errorClass).removeClass(validClass);
+                },
+                "unhighlight": function (element, errorClass, validClass) {
+                    $(element).removeClass(errorClass).addClass(validClass);
+                },
+                "submitHandler": function (form, e) {
+                    showLoader();
+                    e.preventDefault();
+                    const formData = new FormData(form);
+                    const body = Object.fromEntries(formData.entries());
+                    $.ajax({
+                        "url": '@Url.Action("Register", "Branch")',
+                        "type": 'POST',
+                        "data": JSON.stringify(body),
+                        "contentType": 'application/json',
+                        success: function (resp) {
+                            table.row.add(resp).draw();
+                            showTooltips();
+                            hideModal('modalRegisterBranch');
+                            resetForm('formRegisterBranch');
+                            tableCounter(table, 'totalBranches');
+                            alertSuccess(resp.branchName, `Sucursal <strong>#${resp.branchCode}</strong> creada correctamente.`);
+                        },
+                        error: function (xhr) {
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                alertError('Agregar sucursal', xhr.responseJSON.message);
+                            } else {
+                                alertError('Agregar sucursal', 'Ha ocurrido un error inesperado.');
+                            }
+                        },
+                        complete: function () {
+                            hideLoader();
+                        }
+                    });
+                }
+            });
+        }
+
+        let validateAndUpdateBranch = (table, formId) => {
+            $('#tableBranch').on('click', '.button--edit', function () {
+                openUpdateBranchModal(this);
+            });
+
+            $(`#${formId}`).validate({
+                "rules": {
+                    "branchName": {
+                        "required": true,
+                        "minlength": 2,
+                        "maxlength": 30,
+                        "branchNameUnique": true
+                    }
+                },
+                "messages": {
+                    "branchName": {
+                        "required": "El campo no debe ser vacio.",
+                        "minlength": "El campo debe tener al menos {0} caracteres",
+                        "maxlength": "El campo debe tener maximo {0} caracteres",
+                        "branchNameUnique": "El nombre de la sucursal ya existe."
+                    }
+                },
+                "errorClass": "is-invalid",
+                "validClass": "is-valid",
+                "errorElement": "span",
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass(errorClass).removeClass(validClass);
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass(errorClass).addClass(validClass);
+                },
+                submitHandler: function (form, e) {
+                    showLoader();
+                    e.preventDefault();
+                    const formData = new FormData(form);
+                    const body = Object.fromEntries(formData.entries());
+                    $.ajax({
+                        "url": '@Url.Action("Update", "Branch")',
+                        "type": 'POST',
+                        "data": JSON.stringify(body),
+                        "contentType": 'application/json',
+                        success: function (resp) {
+                            var row = table.row(function (idx, data, node) {
+                                return data.branchCode == body.branchCode;
+                            });
+                            if (row.length) {
+                                var rowData = row.data();
+                                rowData.branchName = resp.branchName;
+                                rowData.branchCity = resp.branchCity;
+                                rowData.modificationUser = resp.modificationUser;
+                                rowData.modificationDate = resp.modificationDate;
+                                row.data(rowData).draw(false);
+                            };
+                            showTooltips();
+                            hideModal('modalUpdateBranch');
+                            resetForm('formUpdateBranch');
+                            alertSuccess(resp.branchName, `Sucursal <strong>#${resp.branchCode}</strong> actualizada correctamente.`);
+                        },
+                        error: function (xhr) {
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                alertError('Actualizar sucursal', xhr.responseJSON.message);
+                            } else {
+                                alertError('Actualizar sucursal', 'Ha ocurrido un error inesperado.');
+                            }
+                        },
+                        complete: function () {
+                            hideLoader();
+                        }
+                    });
+                }
+            });
+        }
+
+        let branchNameExists = (table, branchName, branchCode) => {
+            return table
+            .data()
+            .toArray()
+            .some(row =>
+                row.branchName.trim().toLowerCase() === branchName.trim().toLowerCase() &&
+                row.branchCode != branchCode
+            );
+        }
+
+        let loadBranch = (table) => {
+            showLoader();
+            $.ajax({
+                "url": '@Url.Action("GetAll", "Branch")',
+                "type": 'POST',
+                "contentType": 'application/json',
+                "dataSrc": '',
+                success: function (response) {
+                    table.clear();
+                    table.rows.add(response).draw();
+                    showTooltips();
+                    tableCounter(table, 'totalBranches');
+                },
+                error: function (xhr, status, error) {
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        alertError('Obtener sucursales', xhr.responseJSON.message);
+                    } else {
+                        alertError('Obtener sucursales', 'Ha ocurrido un error inesperado.');
+                    }
+                },
+                complete: function () {
+                    hideLoader();
+                }
+            });
+        }
+
+        let openUpdateBranchModal = (button) => {
+            const row = $(button).closest('tr');
+            const branchCode = row.find('td').eq(0).text().trim();
+            const branchName = row.find('td strong').text().trim();
+            const branchCity = row.find('td').eq(2).text().trim();
+            const userCode = row.find('td').eq(3).text().trim();
+            $('#formUpdateBranchCode').val(branchCode);
+            $('#formUpdateBranchName').val(branchName);
+            $('#formUpdateBranchCity').val(branchCity).trigger('change');
+            $('#formUpdateUserCode').val(userCode);
+            showModal('modalUpdateBranch');
+        }
+
+        let showModal = (modalId) => $(`#${modalId}`).modal('show');
+        let hideModal = (modalId) => $(`#${modalId}`).modal('hide');
+        let resetForm = (formId) => {
+            $(`#${formId}`)[0].reset();
+            $(`#${formId}`).find('.is-valid, .is-invalid').removeClass('is-valid is-invalid');
+        }
+        let tableCounter = (table, nodeId) => $(`#${nodeId}`).html(table.data().count());
+        let showTooltips = () => $('[data-bs-toggle="popover"]').each(function () { new bootstrap.Popover(this); });
+    </script>
+}

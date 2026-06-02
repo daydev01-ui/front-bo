@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Menú Principal";
+    ViewData["Username"] = @ViewBag.Username;
+    ViewData["Role"] = @ViewBag.Role;
+}
+
+<div class="mb-3 d-flex justify-content-center">
+    <h3><strong>Menú Principal</strong></h3>
+</div>
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-3 col-md-4 col-sm-12">
+        <div class="card mb-3 p-3">
+            <div class="card-body text-center">
+
+                <h5 class="card-title pb-3">Administrador</h5>
+
+                <div class="d-grid">
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">
+                        Ingresar
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-12">
+        <div class="card mb-3 p-3">
+            <div class="card-body text-center">
+
+                <h5 class="card-title pb-3">Reportes</h5>
+
+                <div class="d-grid">
+                    <a href="@Url.Action("Index", "Report")" class="btn btn-primary">
+                        Ver reportes
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

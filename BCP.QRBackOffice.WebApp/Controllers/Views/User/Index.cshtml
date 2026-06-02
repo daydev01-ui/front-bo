@@ -1,0 +1,262 @@
+﻿@{
+    ViewData["Title"] = "Usuarios";
+    ViewData["Username"] = @ViewBag.Username;
+    ViewData["Role"] = @ViewBag.Role;
+}
+
+<div class="mb-3 px-2 d-flex justify-content-between align-items-center">
+    <a href="~/Business/Index?ChannelName=@ViewBag.ChannelName" role="button" class="button-link d-flex justify-content-center align-items-center" style="text-decoration: none; color: currentColor;">
+        <div class="button-link__container">
+            <span style="display: block;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                     class="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+                </svg>
+                Volver
+            </span>
+        </div>
+    </a>
+</div>
+
+<div class="mb-3 d-flex justify-content-center">
+    <h3>
+        <strong>@ViewBag.TitleChannel</strong>
+    </h3>
+</div>
+
+<div class="container-fluid d-flex justify-content-center p-0 mb-3">
+    <div class="row g-3 justify-content-center" style="width: 100%;">
+        <div class="col-xl-4 col-sm-12 text-center">
+            <div class="card">
+                <div class="card-body p-2">
+                    <strong>Empresa:</strong>
+                    @ViewBag.BusinessName
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mb-3 px-2 d-flex justify-content-between align-items-center">
+    <h4>
+        Usuarios
+        <span id="totalUsers" class="badge rounded-pill text-bg-primary">
+            0
+        </span>
+    </h4>
+</div>
+
+<div class="paper p-2">
+    <table id="tableUser" class="table table-borderless table-hover align-middle" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col" data-priority="1">Codigo usuario</th>
+                <th scope="col" data-priority="5">Nombre usuario</th>
+                <th scope="col" data-priority="3">Acceso</th>
+                <th scope="col" data-priority="4">Rol</th>
+                <th scope="col">Correo electronico</th>
+                <th scope="col">Creado por</th>
+                <th scope="col">Creado en</th>
+                <th scope="col">Modificado por</th>
+                <th scope="col">Modificado en</th>
+                <th scope="col">Estado</th>
+                <th scope="col" data-priority="2">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Codigo usuario</th>
+                <th>Nombre usuario</th>
+                <th>Acceso</th>
+                <th>Rol</th>
+                <th>Correo electronico</th>
+                <th>Creado por</th>
+                <th>Creado en</th>
+                <th>Modificado por</th>
+                <th>Modificado en</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+           var role = '@ViewBag.Role';
+           var channelName = '@ViewBag.ChannelName';
+           var table = $('#tableUser').DataTable({
+              "columnDefs": [],
+              "language": {
+                 "search": "Buscar usuario:",
+                 "lengthMenu": "Mostrar _MENU_ usuarios",
+                 "zeroRecords": "No se encontraron resultados",
+                 "info": "Mostrando _START_ a _END_ de _TOTAL_ usuarios",
+                 "infoEmpty": "Mostrando 0 a 0 de 0 usuarios",
+                 "infoFiltered": "(filtrado de _MAX_ total usuarios)",
+                 "emptyTable": "No hay usuarios registrados"
+              },
+              "responsive": true,
+              "order": [[0, "asc"]],
+              "lengthMenu": [10, 15, 20],
+              "pagingType": "simple_numbers",
+              "columns":
+                 [
+                    { 
+                        "data": 'userCode', 
+                        "title": 'Codigo usuario' 
+                    },
+                    { 
+                        "data": 'userName',
+                        "title": 'Nombre usuario'
+                    },
+                    {
+                       "data": 'access',
+                       "title": 'Acceso',
+                       render: function (data, type, row) {
+                          return `<strong>${data}</strong>`;
+                       }
+                    },
+                    {
+                       "data": 'role',
+                       "title": 'Rol',
+                       render: function (data, type, row) {
+                          switch (data) {
+                              case "Jefe de agencia":
+                                return `<span class="badge text-bg-primary">${data}</span>`;
+                              case "Cajero":
+                                return `<span class="badge text-bg-warning">${data}</span>`;
+                              case "Administrador":
+                                return `<span class="badge text-bg-success">${data}</span>`;
+                              default:
+                                return `<span class="badge text-bg-danger">${data}</span>`;
+                          }
+                       }
+                    },
+                    { 
+                        "data": 'email', 
+                        "title": 'Correo electronico' 
+                    },
+                    { 
+                        "data": 'creationUser', 
+                        "title": 'Creado por' 
+                    },
+                    { 
+                        "data": 'creationDate', 
+                        "title": 'Creado en' 
+                    },
+                    { 
+                        "data": 'modificationUser', 
+                        "title": 'Modificado por' 
+                    },
+                    { 
+                        "data": 'modificationDate', 
+                        "title": 'Modificado en' 
+                    },
+                    {
+                       "data": 'state',
+                       "title": 'Estado',
+                       render: function (data, type, row) {
+                           return `
+                                <span class="badge text-bg-${data ? 'success' : 'danger'}">
+                                    ${data ? 'Activo' : 'Inactivo'}
+                                </span>
+                           `;
+                       }
+                    },
+                    {
+                       "data": null,
+                       "title": 'Acciones',
+                       "orderable": false,
+                       "visible": (role === 'Administrador' || role === 'Escritor'),
+                       render: function (data, type, row) {
+                          return `
+                            <div style="display: flex; gap: 0.5rem;">
+                                <span class="d-inline-block" tabindex="0"
+                                data-bs-toggle="popover" data-bs-trigger="hover"
+                                data-bs-placement="top" data-bs-content="Desbloquear usuario"
+                                data-bs-custom-class="custom-tooltip">
+                                    <button class="button button--edit" type="button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
+                                        </svg>
+                                    </button>
+                                </span>
+                            </div>
+                          `;
+                       }
+                    }
+
+                 ]
+           });
+
+           loadUser(table);
+
+           UnlockUser();
+        });
+
+        let loadUser = (table) => {
+           showLoader();
+           $.ajax({
+              "url": '@Url.Action("GetAll", "User")',
+              "type": 'POST',
+              "contentType": 'application/json',
+              "dataSrc": '',
+              success: function (response) {
+                 table.clear();
+                 table.rows.add(response).draw();
+                 showTooltips();
+                 countRows(table, 'totalUsers');
+              },
+              error: function (xhr, status, error) {
+                  if (xhr.responseJSON && xhr.responseJSON.message) {
+                      alertError('Obtener usuarios', xhr.responseJSON.message);
+                  } else {
+                      alertError('Obtener usuarios', 'Ha ocurrido un error inesperado.');
+                  }
+              },
+              complete: function () {
+                 hideLoader();
+              }
+           });
+        }
+
+        let UnlockUser = () => {
+            $('#tableUser').on('click', '.button--edit', function () {
+                showLoader();
+                const row = $(this).closest('tr');
+                const userCode = row.find('td').eq(0).text().trim();
+                const body = { userCode };
+                $.ajax({
+                    "url": '@Url.Action("Unlock", "User")',
+                    "type": 'POST',
+                    "data": JSON.stringify(body),
+                    "contentType": 'application/json',
+                    success: function (response) {
+                        showTooltips();
+                        alertSuccess('Desbloqueo de usuario', `El usuario <strong>#${body.userCode}</strong> ha sido desbloqueado exitosamente.`);
+                    },
+                    error: function (xhr, status, error) {
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            alertError('Desbloqueo de usuario', xhr.responseJSON.message);
+                        } else {
+                            alertError('Desbloqueo de usuario', 'Ha ocurrido un error inesperado.');
+                        }
+                    },
+                    complete: function () {
+                        hideLoader();
+                    }
+                });
+            });
+        };
+
+        let countRows = (table, containerId) => $(`#${containerId}`).html(table.data().count());
+        let showTooltips = () => $('[data-bs-toggle="popover"]').each(function () { new bootstrap.Popover(this); });
+    </script>
+}

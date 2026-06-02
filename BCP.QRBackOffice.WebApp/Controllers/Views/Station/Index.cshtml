@@ -1,0 +1,680 @@
+﻿@{
+    ViewData["Title"] = "Cajas";
+    ViewData["Username"] = @ViewBag.Username;
+    ViewData["Role"] = @ViewBag.Role;
+}
+
+<div class="mb-3 px-2 d-flex justify-content-between align-items-center">
+    <a href="~/Branch/Index?BusinessCode=@ViewBag.BusinessCode" role="button" class="button-link d-flex justify-content-center align-items-center" style="text-decoration: none; color: currentColor;">
+        <div class="button-link__container">
+            <span style="display: block;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                     class="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+                </svg>
+                Volver
+            </span>
+        </div>
+    </a>
+</div>
+
+<div class="mb-3 d-flex justify-content-center">
+    <h3>
+        <strong>@ViewBag.TitleChannel</strong>
+    </h3>
+</div>
+
+
+<div class="container-fluid d-flex justify-content-center p-0 mb-3">
+    <div class="row g-3 justify-content-center" style="width: 100%;">
+
+        <div class="col-xl-4 col-sm-12 text-center">
+            <div class="card">
+                <div class="card-body p-2">
+                    <strong>Empresa:</strong>
+                    @ViewBag.BusinessName
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-sm-12 text-center">
+            <div class="card">
+                <div class="card-body p-2">
+                    <strong>Sucursal:</strong>
+                    @ViewBag.BranchName
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="row mb-3 px-2">
+    <div class="col-md-6 col-sm-12 d-flex align-items-center justify-content-md-start justify-content-center mb-3 mb-md-0">
+        <h4 class="mb-0">
+            Cajas
+            <span id="totalStations" class="badge rounded-pill text-bg-primary">0</span>
+        </h4>
+    </div>
+    @if (ViewBag.ChannelName == "MULT" && (ViewBag.Role == "Administrador" || ViewBag.Role == "Escritor"))
+    {
+        <div class="col-md-6 col-sm-12 d-flex align-items-center justify-content-md-end justify-content-center">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalRegisterStation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg size-6"
+                     viewBox="0 0 16 16" stroke-width="1.5" stroke="currentColor">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                </svg>
+                Agregar caja
+            </button>
+        </div>
+    }
+
+</div>
+
+<div class="paper p-2">
+    <table id="tableStation" class="table table-borderless table-hover align-middle" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col" data-priority="1">Codigo caja</th> 
+                <th scope="col" data-priority="3">Nombre caja</th>
+                <th scope="col">Telefono caja</th>
+                <th scope="col">Codigo usuario</th>
+                <th scope="col">Nombre usuario</th>
+                <th scope="col">Creado por</th>
+                <th scope="col">Creado en</th>
+                <th scope="col">Modificado por</th>
+                <th scope="col">Modificado en</th>
+                <th scope="col">Estado</th>
+                <th scope="col" data-priority="2">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Codigo caja</th>
+                <th>Nombre caja</th>
+                <th>Telefono caja</th>
+                <th>Codigo usuario</th>
+                <th>Nombre usuario</th>
+                <th>Creado por</th>
+                <th>Creado en</th>
+                <th>Modificado por</th>
+                <th>Modificado en</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+@* ========================== MODAL REGISTRO DE CAJA ========================== *@
+<div class="modal fade" id="modalRegisterStation" tabindex="-1" aria-labelledby="modalLabelRegisterStation" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 680px;">
+        <form id="formRegisterStation" class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalLabelRegisterStation">Datos caja</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="formRegisterStationName" class="col-form-label">Nombre caja</label>
+                        <input id="formRegisterStationName" name="stationName" type="text" class="form-control" placeholder="">
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="formRegisterAccountNumber" class="col-form-label">Numero de cuenta</label>
+                        <input id="formRegisterAccountNumber" name="accountNumber" type="text" class="form-control" placeholder="">
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="formRegisterPhoneStation" class="col-form-label">Telefono caja</label>
+                        <input id="formRegisterPhoneStation" name="stationPhone" type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="formRegisterFullName" class="col-form-label">Nombre completo</label>
+                        <input id="formRegisterFullName" name="fullName" type="text" class="form-control" placeholder="">
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="formRegisterDocumentType" class="col-form-label">Tipo de documento</label>
+                        <select id="formRegisterDocumentType" name="documentType" class="form-select" aria-label="Documentos">
+                            <option value="" selected>Documentos</option>
+                            <option value="Q">CI</option>
+                            <option value="R">RUC / NIT</option>
+                            <option value="P">Pasaporte</option>
+                            <option value="O">Otros</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="formRegisterDocumentNumber" class="col-form-label">Numero de documento</label>
+                        <input id="formRegisterDocumentNumber" name="documentNumber" type="text" class="form-control" placeholder="">
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="formRegisterDocumentExtension" class="col-form-label">Extension</label>
+                        <select id="formRegisterDocumentExtension" name="documentExtension" class="form-select" aria-label="Extensiones">
+                            <option value="" selected>Extensiones</option>
+                            <option value="LP">La Paz - LP</option>
+                            <option value="SC">Santa Cruz - SC</option>
+                            <option value="CB">Cochabamba - CB</option>
+                            <option value="PT">Potosi - PT</option>
+                            <option value="TJ">Tarija - TJ</option>
+                            <option value="BN">Beni - BN</option>
+                            <option value="PN">Pando - PN</option>
+                            <option value="OR">Oruro - OR</option>
+                            <option value="CH">Chuquisaca - CH</option>
+                            <option value="PE">Extranjero - PE</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="formRegisterUserName" class="col-form-label">Nombre de usuario</label>
+                        <div class="input-group">
+                            <span class="input-group-text button--generate" id="btnGenerateUser">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                    <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9" />
+                                    <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z" />
+                                </svg>
+                            </span>
+                            <input id="formRegisterUserName" name="userName" type="text" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="formRegisterUserPhone" class="col-form-label">Telefono usuario</label>
+                        <input id="formRegisterUserPhone" name="userPhone" type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterCredentialsEmail" class="col-form-label">Correos de notificación de acceso a Multiplica</label>
+                        <div id="emailHelp" class="form-text mb-1 mt-0">Por favor, ingrese al menos un correo electrónico y hasta un máximo de tres, separados por punto y coma (“;”).</div>
+                        <textarea id="formRegisterCredentialsEmail" name="credentialsEmail" style="resize: none" class="form-control" rows="5"></textarea>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="formRegisterNotificationsEmail" class="col-form-label">Correos para notificar pagos realizados por QR</label>
+                        <div id="emailHelp" class="form-text mb-1 mt-0">Por favor, ingrese al menos un correo electrónico y hasta un máximo de tres, separados por punto y coma (“;”).</div>
+                        <textarea id="formRegisterNotificationsEmail" name="notificationsEmail" style="resize: none" class="form-control" rows="5"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Agregar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@* ========================== MODAL ACTUALIZACION DE CAJA ========================== *@
+<div class="modal fade" id="modalUpdateStation" tabindex="-1" aria-labelledby="modalLabelUpdateStation" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form id="formUpdateStation" class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalLabelUpdateStation">Editar Caja</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input id="formUpdateStationCode" name="stationCode" hidden />
+                <input id="formUpdateUserCode" name="userCode" hidden />
+                <div class="mb-2">
+                    <label for="formUpdateStationName" class="col-form-label">Nombre Caja *</label>
+                    <input id="formUpdateStationName" name="stationName" type="text" class="form-control" placeholder="">
+                </div>
+                <div class="mb-2">
+                    <label for="formUpdateStationPhone" class="col-form-label">Telefono Caja *</label>
+                    <input id="formUpdateStationPhone" name="cellPhone" type="text" class="form-control" placeholder="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var role = '@ViewBag.Role';
+            var channelName = '@ViewBag.ChannelName';
+            var businessCode = '@ViewBag.BusinessCode';
+            var table = $('#tableStation').DataTable({
+                "columnDefs": [],
+                "language": {
+                    "search": "Buscar caja:",
+                    "lengthMenu": "Mostrar _MENU_ cajas",
+                    "zeroRecords": "No se encontraron resultados",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ cajas",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 cajas",
+                    "infoFiltered": "(filtrado de _MAX_ total cajas)",
+                    "emptyTable": "No hay cajas registradas"
+                },
+                "responsive": true,
+                "order": [[0, "asc"]],
+                "lengthMenu": [10, 15, 20],
+                "pagingType": "simple_numbers",
+                "columns":
+                    [
+                        { "data": 'stationCode', "title": 'Codigo caja' },
+                        {
+                            "data": 'stationName',
+                            "title": 'Nombre caja',
+                            render: function (data, type, row) {
+                                return `<strong>${data}</strong>`;
+                            }
+                        },
+                        { 
+                            "data": 'cellPhone', 
+                            "title": 'Telefono caja' 
+                        },
+                        { 
+                            "data": 'userCode', 
+                            "title": 'Codigo usuario' 
+                        },
+                        { 
+                            "data": 'userName',
+                            "title": 'Nombre usuario'
+                        },
+                        { 
+                            "data": 'creationUser', 
+                            "title": 'Creado por' 
+                        },
+                        { 
+                            "data": 'creationDate', 
+                            "title": 'Creado en' 
+                        },
+                        { 
+                            "data": 'modificationUser', 
+                            "title": 'Modificado por' 
+                        },
+                        { 
+                            "data": 'modificationDate', 
+                            "title": 'Modificado en' 
+                        },
+                        {
+                            "data": 'state',
+                            "title": 'Estado',
+                            render: function (data, type, row) {
+                               return `
+                                    <span class="badge text-bg-${data ? 'success' : 'danger'}">
+                                        ${data ? 'Activo' : 'Inactivo'}
+                                    </span>
+                               `;
+                            }
+                        },
+                        {
+                            "data": null,
+                            "title": 'Acciones',
+                            "orderable": false,
+                            "visible": (channelName === 'MULT' && role === 'Administrador'),
+                            render: function (data, type, row) {
+                                return `
+                                    <div style="display: flex; gap: 0.5rem;">
+                                        <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
+                                            data-bs-trigger="hover" data-bs-placement="top" data-bs-content="Editar caja">
+                                            <button class="button button--edit" type="button">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                </svg>
+                                            </button>
+                                        </span>
+                                    </div>
+                                 `;
+                            }
+                        }
+
+                    ]
+            });
+            
+            $.validator.addMethod("stationNameUnique", function (value, element) {
+                const stationCode = $('#formUpdateStationCode').val().trim();
+                return !stationNameExists(table, value, stationCode);
+            }, "El nombre de la caja ya existe.");
+
+            $.validator.addMethod("multiEmail", function (value, element) {
+                if (!value) return false;
+                if (/;;+/.test(value) || value.startsWith(";") || value.endsWith(";")) return false;
+                const emails = value.split(";").map(e => e.trim()).filter(e => e.length > 0);
+                if (emails.length === 0 || emails.length > 3) return false;
+                const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+                return emails.every(email => emailRegex.test(email));
+            }, "Ingrese entre 1 y 3 correos válidos separados por ';'");
+
+             $.validator.addMethod("noSpaces", function(value, element) {
+                return this.optional(element) || /^[^\s]+$/.test(value);
+            }, "El campo no debe contener espacios.");
+
+            loadStation(table);
+
+            validateAndRegisterStation(table, 'formRegisterStation');
+
+            validateAndUpdateStation(table, 'formUpdateStation');
+
+            HandleGenerateUsername('formRegisterUserName', 'btnGenerateUser', businessCode);
+        });
+
+         let HandleGenerateUsername = (input, btnId, businessCode) => {
+             $(`#${btnId}`).on('click', function () {
+               const fullName = $('#formRegisterFullName').val().trim();
+               const documetNumber = $('#formRegisterDocumentNumber').val().trim();
+               if(!fullName){
+                   alertError('Generar usuario', 'Por favor, ingrese un nombre completo antes de generar el nombre de usuario.');
+                   return;
+               }
+               if(!documetNumber){
+                   alertError('Generar usuario', 'Por favor, ingrese un numero de documento antes de generar el nombre de usuario.');
+                   return;
+               }
+               const userName = generateUserName(businessCode, fullName, documetNumber);
+               $(`#${input}`)
+               .val(userName)
+               .removeClass('is-invalid')
+               .addClass('is-valid')
+               .next('span.error, span.is-invalid').remove();
+           });
+        }
+
+        let generateUserName = (businessCode, fullName, documetNumber) => {
+            const initials = fullName.split(' ').slice(0, 2).map(palabra => palabra.charAt(0).toLowerCase()).join('');
+            const numbers = documetNumber.charAt(0) + documetNumber.charAt(documetNumber.length - 1)
+            return ('Caj' + numbers + initials + businessCode.substring(0, 3).padEnd(3, '0') + generateRandomCode(3));
+        }
+
+        let generateRandomCode = (length = 3) => {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        let validateAndRegisterStation = (table, formId) => {
+            $(`#${formId}`).validate({
+                "rules": {
+                    "stationName": {
+                        "required": true,
+                        "minlength": 2,
+                        "maxlength": 30,
+                        "stationNameUnique": true
+                    },
+                    "stationPhone": {
+                        "digits": true
+                    },
+                    "accountNumber":{
+                        "required": true,
+                        "minlength": 8,
+                        "maxlength": 14,
+                        "digits": true,
+                        "noSpaces": true
+                    },
+                    "fullName": {
+                        "required": true,
+                        "minlength": 2,
+                        "maxlength": 50
+                    },
+                    "userName": {
+                        "required": true,
+                        "minlength": 2,
+                        "maxlength": 20,
+                        "noSpaces": true
+                    },
+                    "documentType": {
+                        "required": true
+                    },
+                    "documentNumber": {
+                        "required": true,
+                        "minlength": 5,
+                        "maxlength": 15
+                    },
+                    "documentExtension": {
+                        "required": true
+                    },
+                    "userPhone": {
+                        "rangelength": [8, 8],
+                        "digits": true
+                    },
+                    "credentialsEmail": {
+                        "multiEmail": true
+                    },
+                    "notificationsEmail": {
+                        "multiEmail": true
+                    }
+                },
+                "messages": {
+                    "stationName": {
+                        "required": "El campo no debe ser vacio.",
+                        "minlength": "El campo debe tener al menos {0} caracteres",
+                        "maxlength": "El campo debe tener maximo {0} caracteres",
+                        "stationNameUnique": "El nombre de la caja ya existe."
+                    },
+                    "stationPhone": {
+                        "digits": "Solo se permiten números."
+                    },
+                    "accountNumber": {
+                        "required": "El campo no debe ser vacio.",
+                        "minlength": "El campo debe tener al menos {0} caracteres",
+                        "maxlength": "El campo debe tener maximo {0} caracteres",
+                        "digits": "Solo se permiten números.",
+                        "noSpaces": "El campo no debe contener espacios."
+                    },
+                    "fullName": {
+                        "required": "El campo no debe ser vacio.",
+                        "minlength": "El campo debe tener al menos {0} caracteres",
+                        "maxlength": "El campo debe tener maximo {0} caracteres",
+                        "noSpaces": "El campo no debe contener espacios."
+                    },
+                    "userName": {
+                        "required": "El campo no debe ser vacio.",
+                        "minlength": "El campo debe tener al menos {0} caracteres",
+                        "maxlength": "El campo debe tener maximo {0} caracteres",
+                        "noSpaces": "El campo no debe contener espacios."
+                    },
+                    "documentType": {
+                        "required": "El campo no debe ser vacio."
+                    },
+                    "documentNumber": {
+                        "required": "El campo no debe ser vacio.",
+                        "minlength": "El campo debe tener al menos {0} caracteres",
+                        "maxlength": "El campo debe tener maximo {0} caracteres"
+                    },
+                    "documentExtension": {
+                        "required": "El campo no debe ser vacio."
+                    },
+                    "userPhone": {
+                        "rangelength": "El teléfono debe tener exactamente 8 dígitos.",
+                        "digits": "Solo se permiten números."
+                    },
+                    "credentialsEmail": {
+                        "multiEmail": "Debe ingresar entre 1 y 3 correos válidos separados por ';'."
+                    },
+                    "notificationsEmail": {
+                        "multiEmail": "Debe ingresar entre 1 y 3 correos válidos separados por ';'."
+                    }
+                },
+                "errorClass": "is-invalid",
+                "validClass": "is-valid",
+                "errorElement": "span",
+                "highlight": function (element, errorClass, validClass) {
+                    $(element).addClass(errorClass).removeClass(validClass);
+                },
+                "unhighlight": function (element, errorClass, validClass) {
+                    $(element).removeClass(errorClass).addClass(validClass);
+                },
+                "submitHandler": function (form, e) {
+                    showLoader();
+                    e.preventDefault();
+                    const formData = new FormData(form);
+                    const body = Object.fromEntries(formData.entries());
+                    console.log(body);
+                    $.ajax({
+                        "url": '@Url.Action("Register", "Station")',
+                        "type": 'POST',
+                        "data": JSON.stringify(body),
+                        "contentType": 'application/json',
+                        success: function (resp) {
+                            table.row.add(resp).draw();
+                            showTooltips();
+                            hideModal('modalRegisterStation');
+                            resetForm('formRegisterStation');
+                            countRows(table, 'totalStations');
+                            alertSuccess(resp.stationName, `Caja <strong>#${resp.stationCode}</strong> creada correctamente.`);
+                        },
+                        error: function (xhr) {
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                alertError('Agregar caja', xhr.responseJSON.message);
+                            } else {
+                                alertError('Agregar caja', 'Ha ocurrido un error inesperado.');
+                            }
+                        },
+                        complete: function () {
+                            hideLoader();
+                        }
+                    });
+                }
+            });
+        }
+
+        let validateAndUpdateStation = (table, formId) => {
+            $('#tableStation').on('click', '.button--edit', function () {
+                openUpdateStationModal(this);
+            });
+
+             $(`#${formId}`).validate({
+                "rules": {
+                    "stationName": {
+                        "required": true,
+                        "minlength": 2,
+                        "maxlength": 30,
+                        "stationNameUnique": true
+                    }
+                },
+                "messages": {
+                    "stationName": {
+                        "required": "El campo no debe ser vacio.",
+                        "minlength": "El campo debe tener al menos {0} caracteres",
+                        "maxlength": "El campo debe tener maximo {0} caracteres",
+                    }
+                },
+                "errorClass": "is-invalid",
+                "validClass": "is-valid",
+                "errorElement": "span",
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass(errorClass).removeClass(validClass);
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass(errorClass).addClass(validClass);
+                },
+                submitHandler: function (form, e) {
+                    showLoader();
+                    e.preventDefault();
+                    const formData = new FormData(form);
+                    const body = Object.fromEntries(formData.entries());
+                    $.ajax({
+                        "url": '@Url.Action("Update", "Station")',
+                        "type": 'POST',
+                        "data": JSON.stringify(body),
+                        "contentType": 'application/json',
+                        success: function (resp) {
+                            var row = table.row(function (idx, data, node) {
+                                return data.branchCode == body.branchCode;
+                            });
+                            if (row.length) {
+                                var rowData = row.data();
+                                rowData.stationName = resp.stationName;
+                                rowData.cellPhone = resp.cellPhone;
+                                rowData.modificationUser = resp.modificationUser;
+                                rowData.modificationDate = resp.modificationDate;
+                                row.data(rowData).draw(false);
+                            };
+                            showTooltips();
+                            hideModal('modalUpdateStation');
+                            resetForm('formUpdateStation');
+                            alertSuccess(resp.stationName, `Caja <strong>#${resp.stationCode}</strong> actualizada correctamente.`);
+                        },
+                        error: function (xhr) {
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                alertError('Actualizar caja', xhr.responseJSON.message);
+                            } else {
+                                alertError('Actualizar caja', 'Ha ocurrido un error inesperado.');
+                            }
+                        },
+                        complete: function () {
+                            hideLoader();
+                        }
+                    });
+                }
+            });
+        }
+
+        let stationNameExists = (table, stationName, stationCode) => {
+            return table
+                .data()
+                .toArray()
+                .some(row =>
+                    row.stationName.trim().toLowerCase() === stationName.trim().toLowerCase() &&
+                    row.stationCode != stationCode
+                );
+        }
+
+        let loadStation = (table) => {
+            showLoader();
+            $.ajax({
+                "url": '@Url.Action("GetAll", "Station")',
+                "type": 'POST',
+                "contentType": 'application/json',
+                "dataSrc": '',
+                success: function (response) {
+                    table.clear();
+                    table.rows.add(response).draw();
+                    showTooltips();
+                    countRows(table, 'totalStations');
+                },
+                error: function (xhr, status, error) {
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        alertError('Obtener caja', xhr.responseJSON.message);
+                    } else {
+                        alertError('Obtener cajas', 'Ha ocurrido un error inesperado.');
+                    }
+                },
+                complete: function () {
+                    hideLoader();
+                }
+            });
+        }
+
+        let openUpdateStationModal = (button) => {
+            const row = $(button).closest('tr');
+            const stationCode = row.find('td').eq(0).text().trim();
+            const userCode = row.find('td').eq(3).text().trim();
+            const stationName = row.find('td strong').text().trim();
+            const stationPhone = row.find('td').eq(2).text().trim();
+            $('#formUpdateUserCode').val(userCode);
+            $('#formUpdateStationCode').val(stationCode);
+            $('#formUpdateStationName').val(stationName);
+            $('#formUpdateStationPhone').val(stationPhone);
+            showModal('modalUpdateStation');
+        }
+
+        let showModal = (modalId) => $(`#${modalId}`).modal('show');
+        let hideModal = (modalId) => $(`#${modalId}`).modal('hide');
+        let resetForm = (formId) => {
+            $(`#${formId}`)[0].reset();
+            $(`#${formId}`).find('.is-valid, .is-invalid').removeClass('is-valid is-invalid');
+        }
+        let countRows = (table, containerId) => $(`#${containerId}`).html(table.data().count());
+        let showTooltips = () => $('[data-bs-toggle="popover"]').each(function () { new bootstrap.Popover(this); });
+    </script>
+}

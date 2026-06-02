@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Autenticación";
+}
+
+<div class="row m-auto">
+    <form class="p-4" style="max-width: 400px;" id="loginForm">
+        <div class="text-center">
+            <div class="mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="72" height="72">
+                    <path fill="#09f" d="M0 80C0 53.5 21.5 32 48 32h96c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80zM64 96v64h64V96H64zM0 336c0-26.5 21.5-48 48-48h96c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V336zm64 16v64h64V352H64zM304 32h96c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H304c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48zm80 64H320v64h64V96zM256 304c0-8.8 7.2-16 16-16h64c8.8 0 16 7.2 16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s7.2-16 16-16s16 7.2 16 16v96c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s-7.2-16-16-16s-16 7.2-16 16v64c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V304zM368 480a16 16 0 1 1 0-32 16 16 0 1 1 0 32zm64 0a16 16 0 1 1 0-32 16 16 0 1 1 0 32z"></path>
+                </svg>
+            </div>
+            <h4 style="font-weight: 600">BackOffice Multiplica</h4>
+            <p>Accede a nuestra plataforma para gestionar y administrar empresas, sucursales y cajas</p>
+        </div>
+        <div class="mb-3">
+            <label for="formAuthUsername" class="form-label">
+                <strong>Matricula</strong>
+            </label>
+            <div class="input-group input-group-lg">
+                <span class="input-group-text">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                    </svg>
+                </span>
+                <input id="formAuthUsername" name="username" type="text" class="form-control" value="">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="formAuthPassword" class="form-label">
+                <strong>Contraseña</strong>
+            </label>
+            <div class="input-group input-group-lg">
+                <span id="btnPassword" class="input-group-text">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                        <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z" />
+                        <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z" />
+                    </svg>
+                </span>
+                <input id="formAuthPassword" name="password" type="password" class="form-control" value="">
+            </div>
+        </div>
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        </div>
+        <div class="text-center mt-2">
+           <p>
+               ¿Ingresar a Multiplica 2.0?
+               <a style="text-decoration: none" href="https://apppro.bcp.com.bo/Multiplica/Inicio/Index">Accede aqui</a>
+           </p>
+        </div>
+
+    </form>
+</div>
+
+
+@section Scripts {
+    <script>
+        $('#loginForm').on('submit', function(e) {
+            showLoader();
+            e.preventDefault();
+            const formData = new FormData(this);
+            const body = Object.fromEntries(formData.entries());
+            $.ajax({
+                url: '@Url.Action("Login", "Auth")',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(body),
+                success: function(resp) {
+                    window.location.href = '@Url.Action("Index", "FirstHome")';
+                },
+                error: function(xhr) {
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        if(xhr.responseJSON.data !== null) {
+                            alertError('Iniciar sesión', xhr.responseJSON.data.detalle);
+                        }else{
+                            alertError('Iniciar sesión', xhr.responseJSON.message);
+                        }
+                    } else {
+                        alertError('Iniciar sesión', 'Ha ocurrido un error inesperado.');
+                    }
+                },
+                complete: function () {
+                 hideLoader();
+                }
+            });            
+        });
+
+        $('#btnPassword').on('click', function() {
+            const passwordInput = $('#formAuthPassword');
+            const icon = $(this).find('svg');
+            if (passwordInput.attr('type') === 'password') {
+                passwordInput.attr('type', 'text');
+                icon.removeClass('bi-eye-slash-fill').addClass('bi-eye-fill');
+            } else {
+                passwordInput.attr('type', 'password');
+                icon.removeClass('bi-eye-fill').addClass('bi-eye-slash-fill');
+            }
+        });
+
+    </script>
+}
