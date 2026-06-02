@@ -38,7 +38,6 @@
                             <option value="">Todas</option>
                         </select>
                         <input type="hidden" id="empresaCodigo" value="" />
-                        <small id="empresaSeleccionada" class="text-muted" style="display:none;"></small>
                     </div>
 
                     <!-- ESTADO -->
@@ -46,8 +45,8 @@
                         <label>Estado</label>
                         <select class="form-control" id="estado">
                             <option value="">Todos</option>
-                            <option value="PROCESADOS">Procesados</option>
-                            <option value="EN_COLA">En Cola</option>
+                            <option value="P">Procesados</option>
+                            <option value="C">En Cola</option>
                         </select>
                     </div>
 
@@ -98,9 +97,8 @@
             const endInput   = document.getElementById("fFin");
             const msg        = document.getElementById("warningMessage");
             const btnExcel   = document.getElementById("btnExcel");
-            const empresaSearch     = document.getElementById("empresaSearch");
-            const empresaSelect     = document.getElementById("empresa");
-            const empresaSelLabel   = document.getElementById("empresaSeleccionada");
+            const empresaSearch = document.getElementById("empresaSearch");
+            const empresaSelect = document.getElementById("empresa");
 
             // -- Inicializar mes actual ------------------------------------------
             const hoy = new Date();
@@ -189,11 +187,9 @@
             // Al seleccionar una opción del dropdown
             empresaSelect.addEventListener("change", function () {
                 const opt = empresaSelect.options[empresaSelect.selectedIndex];
-                empresaSearch.value           = opt.textContent;
+                empresaSearch.value = opt.textContent;
                 document.getElementById("empresaCodigo").value = opt.value;
-                empresaSelLabel.textContent   = opt.value ? `Código: ${opt.value}` : '';
-                empresaSelLabel.style.display = opt.value ? "inline" : "none";
-                empresaSelect.style.display   = "none";
+                empresaSelect.style.display = "none";
             });
 
             // Cerrar el select al hacer clic fuera
