@@ -1,0 +1,13 @@
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.QRBackOffice.Models\bin\Debug\net8.0\BCP.QRBackOffice.Models.deps.json
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.QRBackOffice.Models\bin\Debug\net8.0\BCP.QRBackOffice.Models.dll
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.QRBackOffice.Models\bin\Debug\net8.0\BCP.QRBackOffice.Models.pdb
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.QRBackOffice.Models\obj\Debug\net8.0\BCP.QRBackOffice.Models.csproj.AssemblyReference.cache
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.QRBackOffice.Models\obj\Debug\net8.0\BCP.QRBackOffice.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.QRBackOffice.Models\obj\Debug\net8.0\BCP.QRBackOffice.Models.AssemblyInfoInputs.cache
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.QRBackOffice.Models\obj\Debug\net8.0\BCP.QRBackOffice.Models.AssemblyInfo.cs
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.QRBackOffice.Models\obj\Debug\net8.0\BCP.QRBackOffice.Models.csproj.CoreCompileInputs.cache
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.QRBackOffice.Models\obj\Debug\net8.0\BCP.QRBackOffice.Models.sourcelink.json
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.QRBackOffice.Models\obj\Debug\net8.0\BCP.QRBackOffice.Models.dll
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.QRBackOffice.Models\obj\Debug\net8.0\refint\BCP.QRBackOffice.Models.dll
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.QRBackOffice.Models\obj\Debug\net8.0\BCP.QRBackOffice.Models.pdb
+C:\Users\BC3409\source\repos\new-oaqsh-oabam-backoffice-web\BCP.QRBackOffice.Models\obj\Debug\net8.0\ref\BCP.QRBackOffice.Models.dll
