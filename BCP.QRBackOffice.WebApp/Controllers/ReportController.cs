@@ -112,6 +112,8 @@ namespace BCP.QRBackOffice.WebApp.Controllers
 
             ExcelReportRequest excelRequest = new()
             {
+                PublicToken = channel.PublicToken,
+                AppUserId = channel.AppUserId,
                 ServiceCode = channel.ChannelName,
                 BusinessCode = string.IsNullOrWhiteSpace(empresa) ? "ALL" : empresa,
                 StartDate = startDate.ToString("yyyyMMdd"),

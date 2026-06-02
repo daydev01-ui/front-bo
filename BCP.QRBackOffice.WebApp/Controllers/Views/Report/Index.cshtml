@@ -189,10 +189,11 @@
             // Al seleccionar una opción del dropdown
             empresaSelect.addEventListener("change", function () {
                 const opt = empresaSelect.options[empresaSelect.selectedIndex];
-                empresaSearch.value         = opt.textContent;
-                empresaSelLabel.textContent = opt.value ? `Código: ${opt.value}` : '';
+                empresaSearch.value           = opt.textContent;
+                document.getElementById("empresaCodigo").value = opt.value;
+                empresaSelLabel.textContent   = opt.value ? `Código: ${opt.value}` : '';
                 empresaSelLabel.style.display = opt.value ? "inline" : "none";
-                empresaSelect.style.display = "none";
+                empresaSelect.style.display   = "none";
             });
 
             // Cerrar el select al hacer clic fuera
@@ -204,7 +205,7 @@
 
             // -- Exportar Excel --------------------------------------------------
             btnExcel.addEventListener("click", function () {
-                const empresa = empresaSelect.value;
+                const empresa = document.getElementById("empresaCodigo").value;
                 const estado  = document.getElementById("estado").value;
                 const fInicio = formatearFecha(startInput.value);
                 const fFin    = formatearFecha(endInput.value);
