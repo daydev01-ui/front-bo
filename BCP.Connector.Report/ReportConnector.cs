@@ -5,11 +5,10 @@ using BCP.QRBackOffice.Models.Connectors.Report.v1.Responses;
 using BCP.QRBackOffice.Models.Options;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using QRBackoffice.Intranet.Security;
-using System.Buffers.Text;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Channels;
 
 namespace BCP.Connector.Report
 {
@@ -57,9 +56,10 @@ namespace BCP.Connector.Report
                 httpClient.BaseAddress = new Uri(_baseUrl.ApiBackOfficeQR);
                 httpClient.Timeout = channel.Timeout;
 
+                var camelCase = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
                 HttpRequestMessage httpRequest = new(HttpMethod.Post, _routePath.GetReportExcel)
                 {
-                    Content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json"),
+                    Content = new StringContent(JsonConvert.SerializeObject(request, camelCase), Encoding.UTF8, "application/json"),
                 };
                 httpRequest.Headers.Add("Correlation-Id", correlationId);
                 httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Basic", authorization);
@@ -142,9 +142,10 @@ namespace BCP.Connector.Report
                 httpClient.BaseAddress = new Uri(_baseUrl.ApiBackOfficeQR);
                 httpClient.Timeout = channel.Timeout;
 
+                var camelCase = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
                 HttpRequestMessage httpRequest = new(HttpMethod.Post, _routePath.GetAllEmpresas)
                 {
-                    Content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json"),
+                    Content = new StringContent(JsonConvert.SerializeObject(request, camelCase), Encoding.UTF8, "application/json"),
                 };
                 httpRequest.Headers.Add("Correlation-Id", correlationId);
                 httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Basic", authorization);

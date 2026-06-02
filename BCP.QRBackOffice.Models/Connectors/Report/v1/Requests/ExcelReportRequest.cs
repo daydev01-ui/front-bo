@@ -10,6 +10,10 @@ namespace BCP.QRBackOffice.Models.Connectors.Report.v1.Requests
     public class ExcelReportRequest
     {
         [Required]
+        public string PublicToken { get; set; } = String.Empty;
+        [Required]
+        public string AppUserId { get; set; } = String.Empty;
+        [Required]
         public string ServiceCode { get; set; } = String.Empty;
         [Required]
         public string BusinessCode { get; set; } = String.Empty;
@@ -20,7 +24,7 @@ namespace BCP.QRBackOffice.Models.Connectors.Report.v1.Requests
         [Required]
         public string Currency { get; set; } = String.Empty;
         [Required]
-        public string StatusPayment { get; set; } = String.Empty;      
+        public string StatusPayment { get; set; } = String.Empty;
     }
 
 }
